@@ -7,11 +7,11 @@
 -->
 <updates>
     <update>
-        <name>Jodit Editor</name>
+        <name>Jodit Editor v.3.0.11</name>
         <description>Jodit Editor</description>
         <element>jodit</element>
         <type>plugin</type>
-        <version>3.0.10</version>
+        <version>3.0.11</version>
         <infourl title="Joomla Jodit Editor">http://xdsoft.net/jodit/doc/</infourl>
         <downloads>
             <downloadurl type="upgrade" format="zip">https://github.com/jodit/jodit-joomla/archive/master.zip</downloadurl>

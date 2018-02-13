@@ -9,6 +9,9 @@ defined('JPATH_BASE') or die;
 jimport('joomla.form.helper');
 
 class JFormFieldPlay extends JFormField{
+	function getLabel() {
+		return '';
+	}
 	function getInput() {
 		$document = JFactory::getDocument();
 
