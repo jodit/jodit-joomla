@@ -33,6 +33,6 @@ class JFormFieldPlay extends JFormField{
 			window.JoditPlayReady(document.getElementById("' . $this->id . '_root"));
 		})');
 
-        return '<input type="hidden" name="' . $this->name . '" name="' . $this->id . '"/><div id="' . $this->id . '_root"></div>';
+        return '<input type="hidden" name="' . $this->name . '" id="' . $this->id . '"/><div id="' . $this->id . '_root"></div>';
 	}
 }
