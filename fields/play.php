@@ -10,7 +10,7 @@ jimport('joomla.form.helper');
 
 class JFormFieldPlay extends JFormField{
 	function getLabel() {
-		return '';
+		return '<div class="jodit-editor-marker"></div>';
 	}
 	function getInput() {
 		$document = JFactory::getDocument();
@@ -31,6 +31,10 @@ class JFormFieldPlay extends JFormField{
 		$document->addScript(JURI::root() . 'plugins/editors/jodit/node_modules/jodit-play/build/static/js/main.js');
 		$document->addStyleSheet(JURI::root() . 'plugins/editors/jodit/node_modules/jodit/build/jodit.min.css');
 		$document->addStyleSheet(JURI::root() . 'plugins/editors/jodit/node_modules/jodit-play/build/static/css/main.css');
+
+		$document->addStyleDeclaration('.jodit-editor-marker + .control-group{
+			margin-left: 0;
+		}');
 
 		$document->addScriptDeclaration('window.JoditPlayReady && jQuery(function () {
 			window.JoditPlayReady(document.getElementById("' . $this->id . '_root"));
