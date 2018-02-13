@@ -20,7 +20,7 @@ class JFormFieldPlay extends JFormField{
 		    showButtonsTab: true,
 		    initialConfig: ' . json_encode($config) . ',
 		    setConfig: function (config) {
-		        document.getElementById("' . $this->id . '").value = JSON.stringify(code);
+		        document.getElementById("' . $this->id . '").value = JSON.stringify(config);
 		    },
 		}');
 
