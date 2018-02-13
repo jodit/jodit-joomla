@@ -1,6 +1,6 @@
 {
   "name": "jodit-joomla",
-  "version": "3.0.11",
+  "version": "3.0.12",
   "description": "Joomla Editor Jodit",
   "main": "index.js",
   "scripts": {
@@ -27,7 +27,7 @@
   "homepage": "https://github.com/jodit/jodit-joomla#readme",
   "dependencies": {
     "jodit": "^3.1.39",
-    "jodit-play": "^0.1.19",
+    "jodit-play": "^0.1.20",
     "replace": "^0.3.0"
   }
 }
