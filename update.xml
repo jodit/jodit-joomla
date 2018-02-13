@@ -11,10 +11,10 @@
         <description>Jodit Editor</description>
         <element>jodit</element>
         <type>plugin</type>
-        <version>1.0.6</version>
+        <version>1.0.7</version>
         <infourl title="Joomla Jodit Editor">http://xdsoft.net/jodit/doc/</infourl>
         <downloads>
-            <downloadurl type="upgrade" format="zip">http://xdsoft.net/jodit/release/joomla.zip</downloadurl>
+            <downloadurl type="upgrade" format="zip">https://github.com/jodit/jodit-joomla/archive/master.zip</downloadurl>
         </downloads>
         <tags>
             <tag>stable</tag>
