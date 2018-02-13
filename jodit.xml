@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * @copyright	Copyright (c) 2018 editors. All rights reserved.
+ * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ */
+-->
+<extension type="plugin" version="3.0" group="editors" method="upgrade">
+	<name>plg_editors_jodit</name>
+	<author>Chupurnov Valeriy</author>
+	<copyright>Copyright (c) 2018 editors. All rights reserved.</copyright>
+	<license>MIT</license>
+	<authorEmail>chupurnov@gmail.com</authorEmail>
+	<authorUrl>https://xdsoft.net/jodit/</authorUrl>
+	<version>1.0.1</version>
+	<description>
+	<![CDATA[
+		<p>Jodit Editor</p>
+	]]>
+	</description>
+
+	<files>
+		<filename plugin="jodit">jodit.php</filename>
+		<filename>config.jodit.php</filename>
+		<filename>index.html</filename>
+		<filename>package.json</filename>
+		<filename>composer.json</filename>
+		<filename>LICENSE</filename>
+		<folder>jodit</folder>
+		<folder>fields</folder>
+		<folder>vendor</folder>
+		<folder>node_modules</folder>
+	</files>
+
+	<languages>
+		<language tag="en-GB">en-GB.plg_editors_jodit.ini</language>
+		<language tag="en-GB">en-GB.plg_editors_jodit.sys.ini</language>
+	</languages>
+
+	<config>
+		<fields name="params">
+			<fieldset name="basic">
+				<play name="play"></play>
+			</fieldset>
+			<fieldset name="connector" label="PLG_JODIT_CONNECTOR">
+
+            </fieldset>
+		</fields>
+	</config>
+    
+    <updateservers>
+		<server type="extension" priority="1" name="Jodit Editor">https://raw.githubusercontent.com/jodit/jodit-joomla/master/update.xml</server>
+	</updateservers>
+
+</extension>

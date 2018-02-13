@@ -1,0 +1,21 @@
+{
+    "name": "jodit/application",
+    "description": "Jodit FileBrowser and Uploader connector",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Chupurnov Valeriy",
+            "email": "chupurnov@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "Jodit\\": ["src/"] }
+    },
+    "require": {
+        "php": ">=5.4.0",
+        "abeautifulsite/simpleimage": "^2.6"
+    },
+    "require-dev": {
+        "codeception/codeception": "^2.3"
+    }
+}

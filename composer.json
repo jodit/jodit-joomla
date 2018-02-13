@@ -1,0 +1,14 @@
+{
+    "name": "jodit/jodit-joomla",
+    "description": "Joomla Editor on Jodit",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Chupurnov Valeriy",
+            "email": "chupurnov@gmail.com"
+        }
+    ],
+    "require": {
+        "jodit/application": "^2.0"
+    }
+}

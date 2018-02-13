@@ -1,0 +1,22 @@
+{
+  "sourceMap": true,
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "target": "es5",
+    "lib": [
+      "ES5",
+      "ES2015",
+      "DOM",
+      "ScriptHost"
+    ]
+  },
+
+  "module": "umd",
+  "moduleResolution": "node",
+  "typeRoots": [ "./node_modules/@types/" ],
+  "allowSyntheticDefaultImports": true
+}
