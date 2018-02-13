@@ -12,7 +12,7 @@
 	<license>MIT</license>
 	<authorEmail>chupurnov@gmail.com</authorEmail>
 	<authorUrl>https://xdsoft.net/jodit/</authorUrl>
-	<version>1.0.5</version>
+	<version>1.0.6</version>
 	<description>
 	<![CDATA[
 		<p>Jodit Editor</p>
@@ -38,7 +38,7 @@
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
-				<play name="play"></play>
+				<field name="play" type="play"></field>
 			</fieldset>
 			<fieldset name="connector" label="PLG_JODIT_CONNECTOR">
 
