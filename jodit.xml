@@ -12,7 +12,7 @@
 	<license>MIT</license>
 	<authorEmail>chupurnov@gmail.com</authorEmail>
 	<authorUrl>https://xdsoft.net/jodit/</authorUrl>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 	<description>
 	<![CDATA[
 		<p>Jodit Editor</p>
@@ -25,7 +25,6 @@
 		<filename>index.html</filename>
 		<filename>package.json</filename>
 		<filename>composer.json</filename>
-		<folder>jodit</folder>
 		<folder>fields</folder>
 		<folder>vendor</folder>
 		<folder>node_modules</folder>
