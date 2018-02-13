@@ -8,6 +8,8 @@ replace({
         './jodit.xml',
         './jodit.php',
         './update.xml',
+        './en-GB.plg_editors_jodit.ini',
+        './en-GB.plg_editors_jodit.sys.ini',
     ],
     recursive: true,
     silent: false,
