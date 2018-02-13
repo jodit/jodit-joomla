@@ -29,8 +29,8 @@ class JFormFieldPlay extends JFormField{
 		$document->addStyleSheet(JURI::root() . 'plugins/editors/jodit/node_modules/jodit/build/jodit.min.css');
 		$document->addStyleSheet(JURI::root() . 'plugins/editors/jodit/node_modules/jodit-play/build/static/css/main.css');
 
-		$document->addScriptDeclaration('window.JoditPlayConfig.ready && jQuery(function () {
-			window.JoditPlayConfig.ready(document.getElementById("' . $this->id . '_root"));
+		$document->addScriptDeclaration('window.JoditPlayReady && jQuery(function () {
+			window.JoditPlayReady(document.getElementById("' . $this->id . '_root"));
 		})');
 
         return '<input type="hidden" name="' . $this->name . '" name="' . $this->id . '"/><div id="' . $this->id . '_root"></div>';
