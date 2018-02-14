@@ -1,11 +1,11 @@
 {
   "name": "jodit-joomla",
-  "version": "3.0.34",
+  "version": "3.0.35",
   "description": "Joomla Editor Jodit",
   "main": "index.js",
   "scripts": {
     "build": "npm update && npm version patch --no-git-tag-version &&  node build.js",
-    "newversion": "composer update && npm run build && npm run github",
+    "newversion": "npm run build && npm run github",
     "github": "git add --all  && git commit -m \"New version %npm_package_version%. Read more https://github.com/xdan/jodit/ \" && git tag %npm_package_version% && git push --tags origin HEAD:master",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
