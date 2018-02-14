@@ -1,8 +1,9 @@
 # Jodit Editor for Joomla
-Joomla Jodit editor Plugin v.3.0.35
+Joomla Jodit editor package v.3.0.36
 
-[Download](https://github.com/jodit/jodit-joomla/raw/master/tmp/pkg_jodit.zip)
-[Demo](https://xdsoft.net/jodit/)
+* [Download](https://github.com/jodit/jodit-joomla/raw/master/tmp/pkg_jodit.zip)
+* [Jodit](https://xdsoft.net/jodit/)
+* [Jodit PlayGround](https://xdsoft.net/jodit/play.html)
 
 ## Settings
 ![Settings](screen/settings.jpg)
@@ -10,3 +11,9 @@ Joomla Jodit editor Plugin v.3.0.35
 
 ## Permissions
 ![Permissions](screen/permissions.jpg)
+
+## Editor
+![Editor](screen/editor.jpg)
+
+## FileBrowser
+![Editor](screen/filebrwoser.jpg)
