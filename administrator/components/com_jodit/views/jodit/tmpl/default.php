@@ -37,7 +37,38 @@ defined('_JEXEC') or die;
                title="Jodit File Browser"
                href="javascript:void(0)"
                target="_blank"
-               onclick="(new Jodit.modules.FileBrowser()).open();">
+               onclick="(new Jodit.modules.FileBrowser(null, <?=json_encode([
+	                   'ajax' => [
+		                   'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=fileUpload')
+	                   ],
+	                   'create' => [
+		                   'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=folderCreate')
+	                   ],
+	                   'getLocalFileByUrl' => [
+		                   'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=getlocalfilebyurl')
+	                   ],
+	                   'resize' => [
+		                   'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=imageresize')
+	                   ],
+	                   'crop'=> [
+		                   'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=imagecrop')
+	                   ],
+	                   'move'=> [
+		                   'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=filemove')
+	                   ],
+	                   'remove'=> [
+		                   'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=fileremove')
+	                   ],
+	                   'items'=> [
+		                   'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=files')
+	                   ],
+	                   'folder'=> [
+		                   'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=folders')
+	                   ],
+	                   'permissions'=> [
+		                   'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=permissions')
+	                   ],
+                   ])?>)).open();">
                     <i class="icon-picture"></i>
                     <h6 class="thumbnail-title text-center">File Browser</h6>
             </a>
@@ -53,7 +84,8 @@ defined('_JEXEC') or die;
         <dt class="wf-tooltip" title="Licence::The Licence Jodit is released under">
             Licence
         </dt>
-        <dd><a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html" title="GNU General Public License, version 2" target="_blank">GNU General Public License, version 2</a></dd>
+        <dd>
+            <a href="http://www.gnu.org/licenses/old-licenses/gpl-2.0.html" title="GNU General Public License, version 2" target="_blank">GNU General Public License, version 2</a></dd>
         <dt class="wf-tooltip" title="Version::The Editor version currently installed">
             Version
         </dt>

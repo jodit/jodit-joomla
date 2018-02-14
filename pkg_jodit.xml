@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 	 <extension type="package" version="3.4" method="upgrade">
-		<name>Jodit Editor v.3.0.36</name>
+		<name>Jodit Editor v.3.0.37</name>
 		<author>Chupurnov Valeriy</author>
 		<creationDate>February 2018</creationDate>
 		<packagename>jodit</packagename>
-		<version>3.0.36</version>
+		<version>3.0.37</version>
 		<url>https://xdfodt.net/jodit/</url>
 		<packager>Chupurnov Valeriy</packager>
 		<packagerurl>https://xdfodt.net</packagerurl>
-		<description>Jodit Editor v.3.0.36</description>
+		<description>Jodit Editor v.3.0.37</description>
 		<files>
 			<file type="plugin" id="plg_editors_jodit" group="editors">plg_editors_jodit.zip</file>
 			<file type="component" id="com_jodit">com_jodit.zip</file>
 		</files>
 		
 		<updateservers>
-			<server type="extension" priority="1" name="Jodit Editor v.3.0.36">https://raw.githubusercontent.com/jodit/jodit-joomla/master/update.xml</server>
+			<server type="extension" priority="1" name="Jodit Editor v.3.0.37">https://raw.githubusercontent.com/jodit/jodit-joomla/master/update.xml</server>
 		</updateservers> 
 	 </extension>
