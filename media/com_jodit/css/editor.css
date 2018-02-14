@@ -1,0 +1,23 @@
+hr[id="system-readmore"] {
+    border: 1px dashed #ccc;
+    background-color: #fafafa;
+    display: inline-block;
+    width: 100%;
+    padding: 0 2px;
+    margin: 0;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 20px;
+    font-size: 0;
+    line-height: 0;
+    letter-spacing: normal;
+    word-spacing: normal;
+    cursor: pointer;
+    background-image: url(../images/readmore.png);
+    clear: both;
+}
+hr[id="system-readmore"]:hover,
+hr[id="system-readmore"]:active {
+    background-color: #d9edf7;
+    border-color: #31708f;
+}

@@ -1,0 +1,25 @@
+.cpanel [class^="icon-"]{
+    width: 34px;
+    height: 34px;
+    font-size: 34px;
+    line-height: 34px;
+    margin:20px 0;
+}
+.cpanel a {
+    text-align: center;
+}
+
+.cpanel .placeholder {
+    padding: 8px 14px;
+    border: 1px dashed #E5E5E5;
+    background: #fafafa;
+    color: #666;
+}
+.cpanel .dl-horizontal dt {
+    line-height: 2.5em;
+    text-align: left;
+}
+.cpanel .dl-horizontal dd {
+    line-height: 2.5em;
+    margin-bottom: 5px;
+}

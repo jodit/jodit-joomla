@@ -10,5 +10,8 @@
     ],
     "require": {
         "jodit/application": "^2.0"
+    },
+    "config": {
+        "vendor-dir": "administrator/components/com_jodit/helpers"
     }
 }

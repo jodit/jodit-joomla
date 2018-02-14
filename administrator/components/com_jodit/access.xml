@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<access component="com_jodit">
+<section name="component">
+	<action name="core.manage.files" title="COM_JODIT_ACCESS_CONTROL_FILES" description="COM_JODIT_ACCESS_CONTROL_FILES_DESCRIPTION" />
+	<action name="core.edit.file_move" title="COM_JODIT_ACCESS_CONTROL_FILE_MOVE" description="COM_JODIT_ACCESS_CONTROL_FILE_MOVE_DESCRIPTION" />
+	<action name="core.create.file_upload" title="COM_JODIT_ACCESS_CONTROL_FILE_UPLOAD" description="COM_JODIT_ACCESS_CONTROL_FILE_UPLOAD_DESCRIPTION" />
+	<action name="core.create.file_upload_remote" title="COM_JODIT_ACCESS_CONTROL_FILE_UPLOAD_REMOTE" description="COM_JODIT_ACCESS_CONTROL_FILE_UPLOAD_REMOTE_DESCRIPTION" />
+	<action name="core.delete.file_remove" title="COM_JODIT_ACCESS_CONTROL_FILE_REMOVE" description="COM_JODIT_ACCESS_CONTROL_FILE_REMOVE_DESCRIPTION" />
+	<action name="core.edit.file_rename" title="COM_JODIT_ACCESS_CONTROL_FILE_RENAME" description="COM_JODIT_ACCESS_CONTROL_FILE_RENAME_DESCRIPTION" />
+	<action name="core.manage.folders" title="COM_JODIT_ACCESS_CONTROL_FOLDERS" description="COM_JODIT_ACCESS_CONTROL_FOLDERS_DESCRIPTION" />
+	<action name="core.edit.folder_move" title="COM_JODIT_ACCESS_CONTROL_FOLDER_MOVE" description="COM_JODIT_ACCESS_CONTROL_FOLDER_MOVE_DESCRIPTION" />
+	<action name="core.create.folder_create" title="COM_JODIT_ACCESS_CONTROL_FOLDER_CREATE" description="COM_JODIT_ACCESS_CONTROL_FOLDER_CREATE_DESCRIPTION" />
+	<action name="core.delete.folder_remove" title="COM_JODIT_ACCESS_CONTROL_FOLDER_REMOVE" description="COM_JODIT_ACCESS_CONTROL_FOLDER_REMOVE_DESCRIPTION" />
+	<action name="core.edit.folder_rename" title="COM_JODIT_ACCESS_CONTROL_FOLDER_RENAME" description="COM_JODIT_ACCESS_CONTROL_FOLDER_RENAME_DESCRIPTION" />
+	<action name="core.edit.image_resize" title="COM_JODIT_ACCESS_CONTROL_IMAGE_RESIZE" description="COM_JODIT_ACCESS_CONTROL_IMAGE_RESIZE_DESCRIPTION" />
+	<action name="core.edit.image_crop" title="COM_JODIT_ACCESS_CONTROL_IMAGE_CROP" description="COM_JODIT_ACCESS_CONTROL_IMAGE_CROP_DESCRIPTION" />
+</section>
+</access>
+

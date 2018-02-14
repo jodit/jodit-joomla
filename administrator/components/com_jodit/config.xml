@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<fieldset name="basic" label="COM_JODIT_BASIC_OPTIONS" addfieldpath="administrator/components/com_jodit/models/fields">
+		<field
+			name="play"
+			type="play"
+		/>
+	</fieldset>
+    <fieldset name="filesystem" label="COM_JODIT_FILESYSTEM_OPTIONS" addfieldpath="administrator/components/com_jodit/models/fields">
+        <field
+            name="root"
+            type="text"
+            label="COM_JODIT_FILESYSTEM_ROOT_LABEL"
+            description="COM_JODIT_FILESYSTEM_ROOT_DESCRIPTION"
+            placeholder="images"
+        />
+
+		<field
+			name="dateformat"
+			type="text"
+			label="COM_JODIT_FILESYSTEM_DATEFORMAT_LABEL"
+			description="COM_JODIT_FILESYSTEM_DATEFORMAT_DESCRIPTION"
+			placeholder="images"
+		/>
+    </fieldset>
+	<fieldset name="permissions" label="JCONFIG_PERMISSIONS_LABEL" description="JCONFIG_PERMISSIONS_DESC">
+		<field name="rules"
+			   type="rules"
+			   label="JCONFIG_PERMISSIONS_LABEL"
+			   filter="rules"
+			   component="com_jodit"
+			   section="component">
+		</field>
+	</fieldset>
+</config>
