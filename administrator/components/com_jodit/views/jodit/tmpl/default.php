@@ -37,7 +37,7 @@ defined('_JEXEC') or die;
                title="Jodit File Browser"
                href="javascript:void(0)"
                target="_blank"
-               onclick="(new Jodit.modules.FileBrowser(null, <?=json_encode([
+               onclick='(new Jodit.modules.FileBrowser(null, <?=json_encode([
 	                   'ajax' => [
 		                   'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=fileUpload')
 	                   ],
@@ -68,7 +68,7 @@ defined('_JEXEC') or die;
 	                   'permissions'=> [
 		                   'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=permissions')
 	                   ],
-                   ])?>)).open();">
+                   ])?>)).open();'>
                     <i class="icon-picture"></i>
                     <h6 class="thumbnail-title text-center">File Browser</h6>
             </a>
