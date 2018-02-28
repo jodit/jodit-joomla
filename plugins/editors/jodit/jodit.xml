@@ -9,7 +9,7 @@
 	<name>plg_editors_jodit</name>
 	<author>Chupurnov Valeriy</author>
 	<copyright>Copyright (c) 2018 editors. All rights reserved.</copyright>
-	<license>MIT</license>
+	<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
 	<authorEmail>chupurnov@gmail.com</authorEmail>
 	<authorUrl>https://xdsoft.net/jodit/</authorUrl>
 	<version>3.0.16</version>

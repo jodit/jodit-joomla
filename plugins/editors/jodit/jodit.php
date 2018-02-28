@@ -1,7 +1,11 @@
 <?php
 /**
- * @copyright	Copyright (c) 2018 editors. All rights reserved.
- * @license		http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL
+ * @package    jodit
+ *
+ * @author     Valeriy Chupurnov <chupurnov@gmail.com>
+ * @copyright  A copyright
+ * @license    GNU General Public License version 2 or later; see LICENSE.txt
+ * @link       https://xdsoft.net/jodit/
  */
 
 // no direct access
@@ -39,7 +43,7 @@ class plgEditorJodit extends JPlugin {
 	 * @since  3.2
 	 */
 	protected $app = null;
-	protected $version = '3.0.54';
+	protected $version = '3.0.55';
 
 	/**
 	 * Initialises the Editor.

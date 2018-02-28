@@ -1,6 +1,6 @@
 {
   "name": "jodit-application",
-  "version": "2.0.12",
+  "version": "2.0.13",
   "description": "Official Jodit connector",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,7 @@
   "authors": [
     "Chupurnov Valeriy <chupurnov@gmail.com>"
   ],
-  "license": "LICENSE",
+  "license": "http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL",
   "bugs": {
     "url": "https://github.com/xdan/jodit-connector-application/issues"
   },
