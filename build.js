@@ -3,20 +3,23 @@ const replace = require("replace");
 const version = require('./package.json').version;
 const fs = require('fs');
 const archiver = require('archiver');
+console.log(version);
 
 replace({
-    regex: "[/d]+/.[/d]+/.[/d]+",
+    regex: "[0-9]+.[0-9]+.[0-9]+",
     replacement: version,
     paths: [
-        './README.MD',
-        './pkg_jodit.xml',
-        './manifest.xml',
-        './plugins/editors/jodit/jodit.php',
-        './plugins/editors/jodit/jodit.xml',
-        './update.xml',
-        './plugins/editors/jodit/en-GB.plg_editors_jodit.ini',
-        './plugins/editors/jodit/en-GB.plg_editors_jodit.sys.ini',
+        __dirname + '/README.MD',
+        __dirname + '/pkg_jodit.xml',
+        __dirname + '/manifest.xml',
+        __dirname + '/plugins/editors/jodit/jodit.php',
+        __dirname + '/plugins/editors/jodit/jodit.xml',
+        __dirname + '/update.xml',
+        __dirname + '/plugins/editors/jodit/en-GB.plg_editors_jodit.ini',
+        __dirname + '/plugins/editors/jodit/en-GB.plg_editors_jodit.sys.ini',
     ],
+    ignoreCase: true,
+    multiline: true,
     recursive: true,
     silent: true,
 });
@@ -25,7 +28,7 @@ replace({
     regex: "This software is licensed under the MIT license: http://opensource.org/licenses/MIT",
     replacement: 'GNU General Public License version 2 or later; see LICENSE',
     paths: [
-        './administrator/components/com_jodit/helpers/abeautifulsite/simpleimage/src/abeautifulsite/SimpleImage.php',
+        __dirname + '/administrator/components/com_jodit/helpers/abeautifulsite/simpleimage/src/abeautifulsite/SimpleImage.php',
     ],
     recursive: true,
     silent: true,
