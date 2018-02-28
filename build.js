@@ -12,6 +12,7 @@ replace({
         './pkg_jodit.xml',
         './manifest.xml',
         './plugins/editors/jodit/jodit.php',
+        './plugins/editors/jodit/jodit.xml',
         './update.xml',
         './plugins/editors/jodit/en-GB.plg_editors_jodit.ini',
         './plugins/editors/jodit/en-GB.plg_editors_jodit.sys.ini',
