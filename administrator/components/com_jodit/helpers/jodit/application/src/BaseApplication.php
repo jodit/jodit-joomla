@@ -136,7 +136,7 @@ abstract class BaseApplication {
 	function __construct ($config) {
 		ob_start();
 
-		error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
+		
 		ini_set('display_errors', 'on');
 
 		$this->response  = new Response();
@@ -159,7 +159,7 @@ abstract class BaseApplication {
 		$this->action  = $this->request->action;
 
 		if (!$this->config->debug) {
-			error_reporting(0);
+			
 			ini_set('display_errors', 'off');
 		}
 
