@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" version="3.8" method="upgrade">
 	<name>COM_JODIT</name>
-	<creationDate>3.0.66</creationDate>
+	<creationDate>3.0.67</creationDate>
 	<author>Chupurnov Valeriy</author>
 	<authorEmail>chupurnov@gmail.com</authorEmail>
 	<authorUrl>https://xdsoft.net/jodit/</authorUrl>
 	<copyright>xdsoft.net</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>3.0.66</version>
+	<version>3.0.67</version>
 	<description>COM_JODIT_XML_DESCRIPTION</description>
 
 	<!-- Media files -->
