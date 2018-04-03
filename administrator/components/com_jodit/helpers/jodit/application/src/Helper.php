@@ -79,31 +79,6 @@ abstract class Helper {
 		return trim(preg_replace($regex, '', $file));
 	}
 
-	/**
-	 * Check by mimetype what file is image
-	 *
-	 * @param string $path
-	 *
-	 * @return bool
-	 */
-	static function isImage($path) {
-		try {
-			if (!function_exists('exif_imagetype')) {
-				function exif_imagetype($filename) {
-					if ((list(, , $type) = getimagesize($filename)) !== false) {
-						return $type;
-					}
-
-					return false;
-				}
-			}
-
-			return in_array(exif_imagetype($path), [IMAGETYPE_GIF, IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_BMP]);
-		} catch (\Exception $e) {
-			return false;
-		}
-	}
-
 
 	/**
 	 * Download remote file on server
@@ -139,11 +114,10 @@ abstract class Helper {
 			curl_close($ch);
 		}
 
-		file_put_contents($destinationFilename, $raw);
-
-		if (!self::isImage($destinationFilename)) {
-			unlink($destinationFilename);
-			throw new \Exception('Bad image ' . $destinationFilename, 406);
+		if ($raw) {
+			file_put_contents($destinationFilename, $raw);
+		} else {
+			throw new \Exception(curl_error($ch), Consts::ERROR_CODE_BAD_REQUEST);
 		}
 	}
 

@@ -28,15 +28,27 @@ class JFormFieldPlay extends JFormField{
 
 		$config = json_decode($this->value) ?: (object)self::$defaultConfig;
 
+		$document->addScriptDeclaration('window.JoditConfig = ' . json_encode($config) . ';');
 		$document->addScriptDeclaration('window.JoditPlayConfig = {
 		    showCode: false,
 		    showEditor: true,
 		    showButtonsTab: true,
+		    historyAPI: false,
+		    dataURL: "' . JURI::root() . 'media/com_jodit/js/jodit-play/",
+		    initialCSS: ' . json_encode(isset($config->css) ? $config->css : "") . ',
 		    initialConfig: ' . json_encode($config) . ',
-		    setConfig: function (config) {
-		        document.getElementById("' . $this->id . '").value = JSON.stringify(config);
+		    setCSS: function (css) {
+		        window.JoditConfig.css = css;
+		        document.getElementById("' . $this->id . '").value = JSON.stringify(window.JoditConfig);
 		    },
-		}');
+		    setConfig: function (config) {
+		        var css = window.JoditConfig.css;
+		        window.JoditConfig = jQuery.extend(true, {}, config);
+		        window.JoditConfig.css = css;
+		      
+		        document.getElementById("' . $this->id . '").value = JSON.stringify(window.JoditConfig);
+		    },
+		};');
 
 		$document->addScript(JURI::root() . 'media/com_jodit/js/jodit/jodit.min.js');
 		$document->addScript(JURI::root() . 'media/com_jodit/js/jodit-play/static/js/main.js');

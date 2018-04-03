@@ -74,21 +74,13 @@ abstract class BaseApplication {
 				ob_end_clean();
 			}
 			header('Content-Type: application/json');
+		} else {
+			$this->response->eslapsedTime = microtime(true) - $this->startedTime;
 		}
 
-		// replace full path from message
-		if ($this->config) {
-			foreach ($this->config->sources as $source) {
-				if (isset($this->response->data->messages)) {
-					foreach ($this->response->data->messages as &$message) {
-						$message = str_replace($source->root, '/', $message);
-						$message = str_replace(__DIR__, '/', $message);
-					}
-				}
-			}
-		}
 
 		echo json_encode($this->response, (!$this->config or $this->config->debug) ? JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES: 0);
+		die;
 	}
 
 	/**
@@ -103,19 +95,18 @@ abstract class BaseApplication {
 	public function execute () {
 		$methods =  get_class_methods($this);
 
-		if (!preg_match('#^[a-z_A-Z0-9]+$#', $this->action) or strlen($this->action) > 50) {
-			throw new \Exception('Bad action', 404);
+		if (!in_array('action' . ucfirst($this->action), $methods)) {
+			throw new \Exception('Action "' . htmlspecialchars($this->action) . '" not found', Consts::ERROR_CODE_NOT_EXISTS);
 		}
 
-		if (in_array('action' . ucfirst($this->action), $methods)) {
-			$this->accessControl->checkPermission($this->getUserRole(), $this->action);
-			$this->response->data =  (object)call_user_func_array([$this, 'action' . $this->action], []);
-		} else {
-			throw new \Exception('Action "' . $this->action . '" not found', 404);
-		}
+		$this->accessControl->checkPermission($this->getUserRole(), $this->action);
+
+		$this->response->data =  (object)call_user_func_array([$this, 'action' . $this->action], []);
+
 
 		$this->response->success = true;
 		$this->response->data->code = 220;
+
 		$this->display();
 	}
 
@@ -126,6 +117,7 @@ abstract class BaseApplication {
 	 * @throws \Exception
 	 */
 
+	private $startedTime;
 	/**
 	 * BaseApplication constructor.
 	 *
@@ -135,11 +127,10 @@ abstract class BaseApplication {
 	 */
 	function __construct ($config) {
 		ob_start();
-
-		
-		ini_set('display_errors', 'on');
+		$this->startedTime = microtime(true);
 
 		$this->response  = new Response();
+		$this->accessControl = new AccessControl();
 
 		set_error_handler(function ($errno, $errstr, $errfile, $errline) {
 			throw new \Exception($errstr .  ((!$this->config or $this->config->debug) ? ' - file:' . $errfile . ' line:' . $errline : ''), 501);
@@ -147,70 +138,21 @@ abstract class BaseApplication {
 
 		set_exception_handler([$this, 'exceptionHandler']);
 
-		$this->config  = new Config($config);
+		$this->config  = new Config($config, null);
 
 		if ($this->config->allowCrossOrigin) {
 			$this->corsHeaders();
 		}
 
-
 		$this->request  = new Request();
 
 		$this->action  = $this->request->action;
 
-		if (!$this->config->debug) {
-			
-			ini_set('display_errors', 'off');
-		}
 
-		if ($this->request->source && $this->request->source !== 'default' && empty($this->config->sources[$this->request->source])) {
-			throw new \Exception('Need valid parameter source key', 400);
-		}
-
-		$this->accessControl = new AccessControl();
 		$this->accessControl->setAccessList($this->config->accessControl);
+		Jodit::$app = $this;
 	}
 
-	/**
-	 * Get default(first) source or by $_REQUEST['source']
-	 *
-	 * @return \Jodit\Source
-	 */
-	public function getSource() {
-		$source = null;
-
-		if (isset($this->config->sources) and count($this->config->sources)) {
-			if (!$this->request->source || empty($this->config->sources[$this->request->source])) {
-				$source =  array_values($this->config->sources)[0];
-			} else {
-				$source = $this->config->sources[$this->request->source];
-			}
-		}
-
-		return $source instanceof Source ? $source : new Source([], $this->config);
-	}
-
-
-	/**
-	 * Check file extension
-	 *
-	 * @param {string} $file
-	 * @param {Source} $source
-	 * @return bool
-	 */
-	protected function isGoodFile($file, Source $source) {
-		$info = pathinfo($file);
-
-		if (!isset($info['extension']) or (!in_array(strtolower($info['extension']), $source->extensions))) {
-			return false;
-		}
-
-		if (in_array(strtolower($info['extension']), $source->imageExtensions) and !Helper::isImage($file)) {
-			return false;
-		}
-
-		return true;
-	}
 
 	protected function getImageEditorInfo() {
 		$source = $this->getSource();
@@ -234,7 +176,7 @@ abstract class BaseApplication {
 		$newName = $this->request->newname ?  Helper::makeSafe($this->request->newname) : '';
 
 		if (!$path || !$file || !file_exists($path . $file) || !is_file($path . $file)) {
-			throw new \Exception('Source file not set or not exists', 404);
+			throw new \Exception('File not exists', Consts::ERROR_CODE_NOT_EXISTS);
 		}
 
 		$img = new SimpleImage();
@@ -252,14 +194,14 @@ abstract class BaseApplication {
 			}
 
 			if (!$this->config->allowReplaceSourceFile and file_exists($path . $newName)) {
-				throw new \Exception('File ' . $newName . ' already exists', 400);
+				throw new \Exception('File ' . $newName . ' already exists', Consts::ERROR_CODE_BAD_REQUEST);
 			}
 		} else {
 			$newName = $file;
 		}
 
-		if (file_exists($path . $this->config->thumbFolderName . DIRECTORY_SEPARATOR . $newName)) {
-			unlink($path . $this->config->thumbFolderName . DIRECTORY_SEPARATOR . $newName);
+		if (file_exists($path . $this->config->thumbFolderName . Consts::DS . $newName)) {
+			unlink($path . $this->config->thumbFolderName . Consts::DS . $newName);
 		}
 
 		$info = $img->get_original_info();
@@ -276,26 +218,174 @@ abstract class BaseApplication {
 	}
 
 	/**
-	 * Error handler
-	 *
-	 * @param {int} errno contains the level of the error raised, as an integer.
-	 * @param {string} errstr contains the error message, as a string.
-	 * @param {string} errfile which contains the filename that the error was raised in, as a string.
-	 * @param {string} errline which contains the line number the error was raised at, as an integer.
+	 * @param \Exception $e
 	 */
-	public function errorHandler ($errorNumber, $errorMessage, $file, $line) {
+	public function exceptionHandler ($e) {
 		$this->response->success = false;
-		$this->response->data->code = $errorNumber;
-		$this->response->data->messages[] = $errorMessage . ((!$this->config or $this->config->debug) ? ' - file:' . $file . ' line:' . $line : '');
+		$this->response->data->code = $e->getCode();
+		$this->response->data->messages[] = $e->getMessage();
+
+		if (!$this->config or $this->config->debug) {
+			do {
+				$traces = $e->getTrace();
+				$this->response->data->messages[] = implode(' - ', [$e->getFile(), $e->getLine()]);
+				foreach ($traces as $trace) {
+					$line = [];
+					if (isset($trace['file'])) {
+						$line[] = $trace['file'];
+					}
+					if (isset($trace['function'])) {
+						$line[] = $trace['function'];
+					}
+					if (isset($trace['line'])) {
+						$line[] = $trace['line'];
+					}
+					$this->response->data->messages[] = implode(' - ', $line);
+				}
+				$e = $e->getPrevious();
+			} while($e);
+		}
 
 		$this->display();
-		return true;
+	}
+	
+
+	/**
+	 * @param \Jodit\Config $source
+	 *
+	 * @return \Jodit\File[]
+	 * @throws \Exception
+	 */
+	public function move(Config $source) {
+		$files = $_FILES[$source->defaultFilesKey];
+		/**
+		 * @var $output File[]
+		 */
+		$output = [];
+
+		try {
+			if (isset($files) and is_array($files) and isset($files['name']) and is_array($files['name']) and count($files['name'])) {
+				foreach ($files['name'] as $i => $file) {
+					if ($files['error'][$i]) {
+						throw new \Exception(isset(Helper::$upload_errors[$files['error'][$i]]) ? Helper::$upload_errors[$files['error'][$i]] : 'Error', $files['error'][$i]);
+					}
+
+					$path     = $source->getPath();
+					$tmp_name = $files['tmp_name'][$i];
+					$new_path = $path . Helper::makeSafe($files['name'][$i]);
+
+					if (!move_uploaded_file($tmp_name, $new_path)) {
+						if (!is_writable($path)) {
+							throw new \Exception('Destination directory is not writeble', Consts::ERROR_CODE_IS_NOT_WRITEBLE);
+						}
+
+						throw new \Exception('No files have been uploaded', Consts::ERROR_CODE_NO_FILES_UPLOADED);
+					}
+
+					$file = new File($new_path);
+
+					try {
+						$this->accessControl->checkPermission($this->getUserRole(), $this->action, $source->getRoot(), pathinfo($file->getPath(), PATHINFO_EXTENSION));
+					} catch (\Exception $e) {
+						$file->remove();
+						throw $e;
+					}
+
+					if (!$file->isGoodFile($source)) {
+						$file->remove();
+						throw new \Exception('File type is not in white list', Consts::ERROR_CODE_FORBIDDEN);
+					}
+
+					if ($source->maxFileSize and $file->getSize() > Helper::convertToBytes($source->maxFileSize)) {
+						$file->remove();
+						throw new \Exception('File size exceeds the allowable', Consts::ERROR_CODE_FORBIDDEN);
+					}
+
+					$output[] = $file;
+				}
+			}
+		} catch (\Exception $e) {
+			foreach ($output as $file) {
+				$file->remove();
+			}
+			throw $e;
+		}
+
+		return $output;
+	}
+
+
+
+	/**
+	 * Read folder and retrun filelist
+	 *
+	 * @param \Jodit\Config $source
+	 *
+	 * @return object
+	 * @throws \Exception
+	 */
+	public function read(Config $source) {
+		$path = $source->getPath();
+
+		$sourceData = (object)[
+			'baseurl' => $source->baseurl,
+			'path' =>  str_replace(realpath($source->getRoot()) . Consts::DS, '', $path),
+			'files' => [],
+		];
+
+		try {
+			$this->accessControl->checkPermission($this->getUserRole(), $this->action, $path);
+		} catch (\Exception $e) {
+			return $sourceData;
+		}
+
+
+		$dir = opendir($path);
+
+		$config = $this->config;
+
+		while ($file = readdir($dir)) {
+			if ($file != '.' && $file != '..' && is_file($path . $file)) {
+				$file = new File($path . $file);
+
+				if ($file->isGoodFile($source)) {
+					$item = [
+						'file' => $file->getPathByRoot($source),
+					];
+
+					if ($config->createThumb || !$file->isImage()) {
+						$item['thumb'] = Image::getThumb($file, $source)->getPathByRoot($source);
+					}
+
+					$item['changed'] = date($config->datetimeFormat, $file->getTime());
+					$item['size'] = Helper::humanFileSize($file->getSize());
+					$item['isImage'] = $file->isImage();
+
+					$sourceData->files[] = $item;
+				}
+			}
+		}
+
+		return $sourceData;
+	}
+
+	public function getRoot() {
+		return realpath($_SERVER['DOCUMENT_ROOT']) . Consts::DS;
 	}
 
 	/**
-	 * @param \Exception $exception
+	 * Return current source
+	 *
+	 * @return \Jodit\Config
+	 * @throws \Exception
 	 */
-	public function exceptionHandler ($exception) {
-		$this->errorHandler($exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
+	public function getSource() {
+		$source = $this->config->getSource($this->request->source);
+
+		if (!$source) {
+			throw new \Exception('Source not found', Consts::ERROR_CODE_NOT_EXISTS);
+		}
+
+		return $source;
 	}
 }

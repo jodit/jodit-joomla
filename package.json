@@ -1,8 +1,9 @@
 {
   "name": "jodit-joomla",
-  "version": "3.0.79",
+  "version": "3.0.80",
   "description": "Joomla Editor Jodit",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "clear": "rm -rf ./administrator/components/com_jodit/helpers/jodit/application/tests/* && rm -rf ./administrator/components/com_jodit/helpers/abeautifulsite/simpleimage/example/*",
     "build": "npm run clear && npm update && npm version patch --no-git-tag-version &&  node build.js",
@@ -22,7 +23,7 @@
     "html"
   ],
   "author": "Chupurnov Valeriy (chupurnov@gmail.com)",
-  "license": "http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL",
+  "license": "GPL-2.0-or-later",
   "bugs": {
     "url": "https://github.com/jodit/jodit-joomla/issues"
   },
@@ -30,7 +31,7 @@
   "dependencies": {
     "archiver": "^2.1.1",
     "jodit": "^3.1.82",
-    "jodit-play": "^0.1.36",
+    "jodit-play": "^0.1.45",
     "replace": "^0.3.0"
   }
 }

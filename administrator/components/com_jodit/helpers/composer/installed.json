@@ -52,17 +52,17 @@
     },
     {
         "name": "jodit/application",
-        "version": "2.0.13",
-        "version_normalized": "2.0.13.0",
+        "version": "2.0.16",
+        "version_normalized": "2.0.16.0",
         "source": {
             "type": "git",
             "url": "https://github.com/xdan/jodit-connector-application.git",
-            "reference": "2a746a87a958bbc0fe66894d6010d0fb9ed785f2"
+            "reference": "2536ea40f4b003e7ef564a7aa85ac8d97bda4869"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/xdan/jodit-connector-application/zipball/2a746a87a958bbc0fe66894d6010d0fb9ed785f2",
-            "reference": "2a746a87a958bbc0fe66894d6010d0fb9ed785f2",
+            "url": "https://api.github.com/repos/xdan/jodit-connector-application/zipball/2536ea40f4b003e7ef564a7aa85ac8d97bda4869",
+            "reference": "2536ea40f4b003e7ef564a7aa85ac8d97bda4869",
             "shasum": ""
         },
         "require": {
@@ -72,7 +72,7 @@
         "require-dev": {
             "codeception/codeception": "^2.3"
         },
-        "time": "2018-02-28T15:22:36+00:00",
+        "time": "2018-03-31T20:07:16+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {

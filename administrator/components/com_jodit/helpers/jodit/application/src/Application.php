@@ -11,8 +11,6 @@ defined('_JEXEC') or die;
 
 namespace Jodit;
 
-use abeautifulsite\SimpleImage;
-
 abstract class Application extends BaseApplication{
 
 	/**
@@ -20,59 +18,19 @@ abstract class Application extends BaseApplication{
 	 */
 	public function actionFiles() {
 		$sources = [];
+
+		$currentSource = $this->getSource();
+
 		foreach ($this->config->sources as $key => $source) {
-			if ($this->request->source && $this->request->source !== 'default' && $key !== $this->request->source && $this->request->path !== './') {
+			if ($this->request->source && $this->request->source !== 'default' && $currentSource !== $source && $this->request->path !== './') {
 				continue;
 			}
 
-			$path = $source->getPath();
-
-			try {
-				$this->accessControl->checkPermission($this->getUserRole(), $this->action, $path);
-			} catch (\Exception $e) {
-				continue;
+			if ($this->accessControl->isAllow($this->getUserRole(), $this->action, $source->getPath())) {
+				$sources[$key] = $this->read($source);
 			}
 
-			$sourceData = (object)[
-				'baseurl' => $source->baseurl,
-				'path' =>  str_replace(realpath($source->getRoot()) . DIRECTORY_SEPARATOR, '', $path),
-				'files' => [],
-			];
 
-			$dir = opendir($path);
-
-			while ($file = readdir($dir)) {
-				if ($file != '.' && $file != '..' && is_file($path . $file)) {
-					if ($this->isGoodFile($path . $file, $source)) {
-						$item = [
-							'file' => $file,
-						];
-
-						if ($this->config->createThumb) {
-							if (!is_dir($path . $this->config->thumbFolderName)) {
-								mkdir($path . $this->config->thumbFolderName, 0777);
-							}
-							if (!file_exists($path . $this->config->thumbFolderName . DIRECTORY_SEPARATOR . $file)) {
-								try {
-									$img = new SimpleImage($path . $file);
-									$img
-										->best_fit(150, 150)
-										->save($path . $this->config->thumbFolderName . DIRECTORY_SEPARATOR . $file, $this->config->quality);
-								} catch (\Exception $e) {
-									continue;
-								}
-							}
-							$item['thumb'] = $this->config->thumbFolderName . DIRECTORY_SEPARATOR . $file;
-						}
-
-						$item['changed'] = date($this->config->datetimeFormat, filemtime($path.$file));
-						$item['size'] = Helper::humanFileSize(filesize($path.$file));
-						$sourceData->files[] = $item;
-					}
-				}
-			}
-
-			$sources[$key] = $sourceData;
 		}
 
 		return [
@@ -100,7 +58,7 @@ abstract class Application extends BaseApplication{
 
 			$sourceData = (object)[
 				'baseurl' => $source->baseurl,
-				'path' =>  str_replace(realpath($source->getRoot()) . DIRECTORY_SEPARATOR, '', $path),
+				'path' =>  str_replace(realpath($source->getRoot()) . Consts::DS, '', $path),
 				'folders' => [],
 			];
 
@@ -108,7 +66,16 @@ abstract class Application extends BaseApplication{
 
 			$dir = opendir($path);
 			while ($file = readdir($dir)) {
-				if ($file != '.' && $file != '..' && is_dir($path . $file) and (!$this->config->createThumb || $file !== $this->config->thumbFolderName) and !in_array($file, $this->config->excludeDirectoryNames)) {
+				if (
+					$file != '.' &&
+					$file != '..' &&
+					is_dir($path . $file) and
+					(
+						!$this->config->createThumb ||
+						$file !== $this->config->thumbFolderName
+					) and
+					!in_array($file, $this->config->excludeDirectoryNames)
+				) {
 					$sourceData->folders[] = $file;
 				}
 			}
@@ -129,34 +96,41 @@ abstract class Application extends BaseApplication{
 		$url = $this->request->url;
 
 		if (!$url) {
-			throw new \Exception('Need url parameter', 400);
+			throw new \Exception('Need url parameter', Consts::ERROR_CODE_BAD_REQUEST);
 		}
 
 		$result = parse_url($url);
 
 		if (!isset($result['host']) || !isset($result['path'])) {
-			throw new \Exception('Not valid URL', 400);
+			throw new \Exception('Not valid URL', Consts::ERROR_CODE_BAD_REQUEST);
 		}
 
 		$filename = Helper::makeSafe(basename($result['path']));
 
 		if (!$filename) {
-			throw new \Exception('Not valid URL', 400);
+			throw new \Exception('Not valid URL', Consts::ERROR_CODE_BAD_REQUEST);
 		}
 
-		Helper::downloadRemoteFile($url, $this->getSource()->getRoot() . $filename);
-		$extension = pathinfo($this->getSource()->getRoot() . $filename, PATHINFO_EXTENSION);
+		$source = $this->config->getCompatibleSource($this->request->source);
+
+		Helper::downloadRemoteFile($url, $source->getRoot() . $filename);
+
+		$file = new File($source->getRoot() . $filename);
 
 		try {
-			$this->accessControl->checkPermission($this->getUserRole(), $this->action, $this->getSource()->getRoot(), $extension);
+			if (!$file->isGoodFile($source)) {
+				throw new \Exception('Bad file', Consts::ERROR_CODE_FORBIDDEN);
+			}
+
+			$this->accessControl->checkPermission($this->getUserRole(), $this->action, $source->getRoot(), $file->getExtension());
 		} catch (\Exception $e) {
-			unlink($this->getSource()->getRoot() . $filename);
+			$file->remove();
 			throw $e;
 		}
 
 		return [
-			'newfilename' => $filename,
-			'baseurl' => $this->getSource()->baseurl,
+			'newfilename' => $file->getName(),
+			'baseurl' => $source->baseurl,
 		];
 	}
 
@@ -168,7 +142,7 @@ abstract class Application extends BaseApplication{
 	 */
 	public function actionFileUpload() {
 
-		$source = $this->getSource();
+		$source = $this->config->getCompatibleSource($this->request->source);
 
 		$root = $source->getRoot();
 		$path = $source->getPath();
@@ -176,54 +150,25 @@ abstract class Application extends BaseApplication{
 		$this->accessControl->checkPermission($this->getUserRole(), $this->action, $path);
 
 		$messages = [];
-		$files = [];
 
-		if (isset($_FILES['files']) and is_array($_FILES['files']) and isset($_FILES['files']['name']) and is_array($_FILES['files']['name']) and count($_FILES['files']['name'])) {
-			foreach ($_FILES['files']['name'] as $i => $file) {
-				if ($_FILES['files']['error'][$i]) {
-					throw new \Exception(isset(Helper::$upload_errors[$_FILES['files']['error'][$i]]) ? Helper::$upload_errors[$_FILES['files']['error'][$i]] : 'Error', $_FILES['files']['error'][$i]);
-				}
+		$files = $this->move($source);
 
-				$tmp_name = $_FILES['files']['tmp_name'][$i];
-
-				if ($source->maxFileSize and filesize($tmp_name) > Helper::convertToBytes($source->maxFileSize)) {
-					unlink($tmp_name);
-					throw new \Exception('File size exceeds the allowable', 403);
-				}
-
-				if (move_uploaded_file($tmp_name, $file = $path . Helper::makeSafe($_FILES['files']['name'][$i]))) {
-					try {
-						$this->accessControl->checkPermission($this->getUserRole(), $this->action, $source->getRoot(), pathinfo($file, PATHINFO_EXTENSION));
-					} catch (\Exception $e) {
-						unlink($file);
-						throw $e;
-					}
-
-					if (!$this->isGoodFile($file, $source)) {
-						unlink($file);
-						throw new \Exception('File type is not in white list', 403);
-					}
-
-					$messages[] = 'File ' . $_FILES['files']['name'][$i] . ' was uploaded';
-					$files[] = str_replace($root, '', $file);
-				} else {
-					if (!is_writable($path)) {
-						throw new \Exception('Destination directory is not writeble', 424);
-					}
-
-					throw new \Exception('No files have been uploaded', 422);
-				}
-			}
-		}
+		$isImages = [];
+		$files = array_map(function (File $file) use ($source, $root, &$isImages) {
+			$messages[] = 'File ' . $file->getName() . ' was uploaded';
+			$isImages[] = $file->isImage();
+			return str_replace($root, '', $file->getPath());
+		}, $files);
 
 		if (!count($files)) {
-			throw new \Exception('No files have been uploaded', 422);
+			throw new \Exception('No files have been uploaded', Consts::ERROR_CODE_NO_FILES_UPLOADED);
 		}
 
 		return [
 			'baseurl' => $source->baseurl,
 			'messages' => $messages,
-			'files' => $files
+			'files' => $files,
+			'isImages' => $isImages
 		];
 	}
 
@@ -243,32 +188,25 @@ abstract class Application extends BaseApplication{
 
 		$target = $this->request->name;
 
-		if (realpath($path . $target) && strpos(realpath($path . $target), $source->getRoot()) !== false) {
+		if (
+			realpath($path . $target) &&
+			strpos(realpath($path . $target), $source->getRoot()) !== false
+		) {
 			$file_path = realpath($path . $target);
 		}
 
-		if ($file_path && file_exists($file_path)) {
-			if (is_file($file_path)) {
-				$result = unlink($file_path);
-				if ($result) {
-					$file = basename($file_path);
-					$thumb = dirname($file_path) . DIRECTORY_SEPARATOR . $source->thumbFolderName . DIRECTORY_SEPARATOR . $file;
-					if (file_exists($thumb)) {
-						unlink($thumb);
-						if (!count(glob(dirname($thumb) . DIRECTORY_SEPARATOR . "*"))) {
-							rmdir(dirname($thumb));
-						}
-					}
-				} else {
-					$error = (object)error_get_last();
-					throw new \Exception('Delete failed! ' . $error->message, 424);
-				}
-			} else {
-				throw new \Exception('It is not a file!', 424);
-			}
+		if (!$file_path || !file_exists($file_path)) {
+			throw new \Exception('File or directory not exists ' . $path . $target, Consts::ERROR_CODE_NOT_EXISTS);
+		}
 
+		if (is_file($file_path)) {
+			$file = new File($file_path);
+			if (!$file->remove()) {
+				$error = (object)error_get_last();
+				throw new \Exception('Delete failed! ' . $error->message, Consts::ERROR_CODE_IS_NOT_WRITEBLE);
+			}
 		} else {
-			throw new \Exception('File or directory not exists' . $path . $target, 400);
+			throw new \Exception('It is not a file!', Consts::ERROR_CODE_IS_NOT_WRITEBLE);
 		}
 	}
 
@@ -294,16 +232,16 @@ abstract class Application extends BaseApplication{
 
 		if ($file_path && file_exists($file_path)) {
 			if (is_dir($file_path)) {
-				$thumb = $file_path . DIRECTORY_SEPARATOR . $source->thumbFolderName . DIRECTORY_SEPARATOR;
+				$thumb = $file_path . Consts::DS . $source->thumbFolderName . Consts::DS;
 				if (is_dir($thumb)) {
 					Helper::deleteDir($thumb);
 				}
 				Helper::deleteDir($file_path);
 			} else {
-				throw new \Exception('It is not a directory!', 424);
+				throw new \Exception('It is not a directory!', Consts::ERROR_CODE_IS_NOT_WRITEBLE);
 			}
 		} else {
-			throw new \Exception('Directory not exists', 400);
+			throw new \Exception('Directory not exists', Consts::ERROR_CODE_NOT_EXISTS);
 		}
 	}
 
@@ -326,13 +264,13 @@ abstract class Application extends BaseApplication{
 					if (is_dir($destinationPath . $folderName)) {
 						return ['messages' => ['Directory successfully created']];
 					}
-					throw new \Exception('Directory was not created', 404);
+					throw new \Exception('Directory was not created', Consts::ERROR_CODE_NOT_EXISTS);
 				}
-				throw new \Exception('Directory already exists', 406);
+				throw new \Exception('Directory already exists', Consts::ERROR_CODE_NOT_ACCEPTABLE);
 			}
-			throw new \Exception('The name for new directory has not been set', 406);
+			throw new \Exception('The name for new directory has not been set', Consts::ERROR_CODE_NOT_ACCEPTABLE);
 		}
-		throw new \Exception('The destination directory has not been set', 406);
+		throw new \Exception('The destination directory has not been set', Consts::ERROR_CODE_NOT_ACCEPTABLE);
 	}
 
 	/**
@@ -353,13 +291,13 @@ abstract class Application extends BaseApplication{
 				if (is_file($sourcePath) or is_dir($sourcePath)) {
 					rename($sourcePath, $destinationPath . basename($sourcePath));
 				} else {
-					throw new \Exception('Not file', 404);
+					throw new \Exception('Not file', Consts::ERROR_CODE_NOT_EXISTS);
 				}
 			} else {
-				throw new \Exception('Need destination path', 400);
+				throw new \Exception('Need destination path', Consts::ERROR_CODE_BAD_REQUEST);
 			}
 		} else {
-			throw new \Exception('Need source path', 400);
+			throw new \Exception('Need source path', Consts::ERROR_CODE_BAD_REQUEST);
 		}
 	}
 
@@ -376,11 +314,11 @@ abstract class Application extends BaseApplication{
 		$info = $this->getImageEditorInfo();
 
 		if (!$info->box || (int)$info->box->w <= 0) {
-			throw new \Exception('Width not specified', 400);
+			throw new \Exception('Width not specified', Consts::ERROR_CODE_BAD_REQUEST);
 		}
 
 		if (!$info->box || (int)$info->box->h <= 0) {
-			throw new \Exception('Height not specified', 400);
+			throw new \Exception('Height not specified', Consts::ERROR_CODE_BAD_REQUEST);
 		}
 
 
@@ -397,19 +335,19 @@ abstract class Application extends BaseApplication{
 		$info = $this->getImageEditorInfo();
 
 		if ((int)$info->box->x < 0 || (int)$info->box->x > (int)$info->width) {
-			throw new \Exception('Start X not specified', 400);
+			throw new \Exception('Start X not specified', Consts::ERROR_CODE_BAD_REQUEST);
 		}
 
 		if ((int)$info->box->y < 0 || (int)$info->box->y > (int)$info->height) {
-			throw new \Exception('Start Y not specified', 400);
+			throw new \Exception('Start Y not specified', Consts::ERROR_CODE_BAD_REQUEST);
 		}
 
 		if ((int)$info->box->w <= 0) {
-			throw new \Exception('Width not specified', 400);
+			throw new \Exception('Width not specified', Consts::ERROR_CODE_BAD_REQUEST);
 		}
 
 		if ((int)$info->box->h <= 0) {
-			throw new \Exception('Height not specified', 400);
+			throw new \Exception('Height not specified', Consts::ERROR_CODE_BAD_REQUEST);
 		}
 
 		$info->img
@@ -426,13 +364,13 @@ abstract class Application extends BaseApplication{
 	public function actionGetLocalFileByUrl() {
 		$url = $this->request->url;
 		if (!$url) {
-			throw new \Exception('Need full url', 400);
+			throw new \Exception('Need full url', Consts::ERROR_CODE_BAD_REQUEST);
 		}
 
 		$parts = parse_url($url);
 
 		if (empty($parts['path'])) {
-			throw new \Exception('Empty url', 400);
+			throw new \Exception('Empty url', Consts::ERROR_CODE_BAD_REQUEST);
 		}
 
 		$found = false;
@@ -453,34 +391,35 @@ abstract class Application extends BaseApplication{
 
 			$root = $source->getPath();
 
-			if (file_exists($root . $path) && is_file($root . $path) && $this->isGoodFile($root . $path, $source)) {
-				$found = true;
-				break;
+			if (file_exists($root . $path) && is_file($root . $path)) {
+				$file = new File($root . $path);
+				if ($file->isGoodFile($source)) {
+					$found = true;
+					break;
+				}
 			}
 		}
 
 		if (!$found) {
-			throw new \Exception('File does not exist or is above the root of the connector', 424);
+			throw new \Exception('File does not exist or is above the root of the connector', Consts::ERROR_CODE_FAILED);
 		}
 
 		return [
-			'path' => str_replace($root, '', dirname($root . $path) . DIRECTORY_SEPARATOR),
+			'path' => str_replace($root, '', dirname($root . $path) . Consts::DS),
 			'name' => basename($path),
 			'source' => $key
 		];
 	}
 
 	public function actionPermissions() {
-		$source = $this->getSource();
-		$path = $source->getPath();
-
 		$result = [];
+		$source = $this->getSource();
 
 		foreach (AccessControl::$defaultRule as $permission => $tmp) {
 			if (preg_match('#^[A-Z_]+$#', $permission)) {
 				$allow = false;
 				try {
-					$this->accessControl->checkPermission($this->getUserRole(), $permission, $path);
+					$this->accessControl->checkPermission($this->getUserRole(), $permission, $source->getPath());
 					$allow = true;
 				} catch (\Exception $e) {
 				}

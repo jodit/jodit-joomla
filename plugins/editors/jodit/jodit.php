@@ -43,7 +43,7 @@ class plgEditorJodit extends JPlugin {
 	 * @since  3.2
 	 */
 	protected $app = null;
-	protected $version = '3.0.79';
+	protected $version = '3.0.80';
 
 	/**
 	 * Initialises the Editor.
@@ -230,7 +230,9 @@ class plgEditorJodit extends JPlugin {
 			};
         </script>';
 
-		return $editor . $script . $this->_displayButtons($id, $buttons, $asset, $author);
+        $css = isset($options->css) ? '<style>' . $options->css . '</style>' : '';
+
+		return $editor . $script . $this->_displayButtons($id, $buttons, $asset, $author) . $css;
 	}
 
 	/**
