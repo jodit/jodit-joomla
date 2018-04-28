@@ -72,6 +72,10 @@ class Config {
 	 */
 	public $sources = [];
 
+	function __set($key, $value) {
+		$this->data->{$key} = $value;
+	}
+
 	function __get($key) {
 		if (isset($this->data->{$key})) {
 			return $this->data->{$key};
@@ -88,21 +92,27 @@ class Config {
 	 */
 	function __construct($data, $parent = null) {
 		$this->parent = $parent;
+		$data = (object)$data;
+		$this->data = $data;
 
 		if ($parent === null) {
-			$this->baseurl = ((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS']) ? 'https://' : 'http://') . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '') . '/';
+			if (!$this->baseurl) {
+				$this->baseurl = ((isset($_SERVER['HTTPS']) and $_SERVER['HTTPS']) ? 'https://' : 'http://') . (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '') . '/';
+			}
 			$this->parent = new Config(self::$defaultOptions, false);
 		}
 
-		$data = (object)$data;
 
-		if (isset($data->sources) and is_array($data->sources)) {
+
+		if (isset($data->sources) and is_array($data->sources) and count($data->sources)) {
 			foreach ($data->sources as $key => $source) {
 				$this->sources[$key] = new Config($source, $this);
 			}
+		} else {
+			$this->sources['default'] = $this;
 		}
 
-		$this->data = $data;
+
 	}
 
 	/**
@@ -169,7 +179,7 @@ class Config {
 				return $item;
 			}
 
-			$source = $item->getSource($sourceName);
+			$source = $item !== $this ? $item->getSource($sourceName) : null;
 
 			if ($source) {
 				return $source;

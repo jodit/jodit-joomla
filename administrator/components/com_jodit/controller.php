@@ -58,7 +58,6 @@ class JoditController extends BaseController {
 			'baseurl' => JURI::root(true) . ($base ? '/' . $base . '/' : '/'),
 			'createThumb' => true,
 			'root' => realpath(JPATH_ROOT . '/' . $base) ?: realpath(JPATH_ROOT . '/images/') ?: JPATH_ROOT,
-			'extensions' => ['jpg', 'png', 'gif', 'jpeg'],
 			'debug' => false,
 			'datetimeFormat' => $params->get('dateformat', 'm/d/Y g:i A'),
 			'accessControl' => [
