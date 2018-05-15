@@ -43,7 +43,7 @@ class plgEditorJodit extends JPlugin {
 	 * @since  3.2
 	 */
 	protected $app = null;
-	protected $version = '3.0.89';
+	protected $version = '3.0.91';
 
 	/**
 	 * Initialises the Editor.
@@ -168,7 +168,7 @@ class plgEditorJodit extends JPlugin {
 	    JFormFieldPlay::$defaultConfig['iframeBaseUrl'] = JUri::root(true);
         $options = (object)(json_decode($params->get('play')) ?: JFormFieldPlay::$defaultConfig);
 
-        if (!$options->iframeCSSLinks) {
+        if (empty($options->iframeCSSLinks)) {
 	        $options->iframeCSSLinks = [];
         }
 
