@@ -37,7 +37,7 @@ defined('_JEXEC') or die;
                title="Jodit File Browser"
                href="javascript:void(0)"
                target="_blank"
-               onclick='(new Jodit.modules.FileBrowser(null, <?=json_encode([
+               onclick='(new Jodit.modules.FileBrowser(null, <?php echo json_encode([
 	                   'ajax' => [
 		                   'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=fileUpload')
 	                   ],
@@ -90,7 +90,7 @@ defined('_JEXEC') or die;
             Version
         </dt>
         <dd>
-            <?
+            <?php
             $component = \JComponentHelper::getComponent('com_jodit');
             $extension = \JTable::getInstance('extension');
             $extension->load($component->id);
