@@ -1,0 +1,24 @@
+{
+  "name": "jodit-application",
+  "version": "2.0.18",
+  "description": "Official Jodit connector",
+  "main": "index.js",
+  "scripts": {
+    "start": "php -S localhost:8181 -t ./tests/",
+    "test": "./vendor/bin/codecept run",
+    "newversion": "npm version patch --no-git-tag-version && npm run github",
+    "github": "git add --all  && git commit -m \"New version %npm_package_version%. Read more http://xdsoft.net/jodit/doc/index.html#%npm_package_version% \" && git tag %npm_package_version% && git push --tags origin HEAD:master"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:xdan/jodit-connector-application.git"
+  },
+  "authors": [
+    "Chupurnov Valeriy <chupurnov@gmail.com>"
+  ],
+  "license": "http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL",
+  "bugs": {
+    "url": "https://github.com/xdan/jodit-connector-application/issues"
+  },
+  "homepage": "https://github.com/xdan/jodit-connector-application#readme"
+}
