@@ -10,6 +10,7 @@ replace({
     replacement: version,
     paths: [
         __dirname + '/README.MD',
+        __dirname + '/node_modules/jodit-play/build/package.json',
         __dirname + '/pkg_jodit.xml',
         __dirname + '/manifest.xml',
         __dirname + '/plugins/editors/jodit/jodit.php',

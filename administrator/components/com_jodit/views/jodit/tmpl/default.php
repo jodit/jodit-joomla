@@ -38,7 +38,10 @@ defined('_JEXEC') or die;
                href="javascript:void(0)"
                target="_blank"
                onclick='(new Jodit.modules.FileBrowser(null, <?php echo json_encode([
-	                   'ajax' => [
+                       'uploader' => [
+                           'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=fileUpload')
+                       ],
+                       'ajax' => [
 		                   'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=fileUpload')
 	                   ],
 	                   'create' => [

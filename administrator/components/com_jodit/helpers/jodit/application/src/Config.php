@@ -208,11 +208,13 @@ class Config {
 			return $source;
 		}
 
-		foreach ($this->sources as $key => $item) {
-			try {
-				$source = $item->getCompatibleSource();
-				return $source;
-			} catch (\Exception $e) {}
+		if ($sourceName === null) {
+			foreach ($this->sources as $key => $item) {
+				try {
+					$source = $item->getCompatibleSource(false);
+					return $source;
+				} catch (\Exception $e) {}
+			}
 		}
 
 		Jodit::$app->accessControl->checkPermission(Jodit::$app->getUserRole(), Jodit::$app->action, $this->getPath());

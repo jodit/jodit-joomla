@@ -50,8 +50,10 @@ class JFormFieldPlay extends JFormField{
 		    },
 		};');
 
+		$playversion = json_decode(file_get_contents(JPATH_ROOT . 'media/com_jodit/js/jodit-play/package.json'))->version;
+
 		$document->addScript(JURI::root() . 'media/com_jodit/js/jodit/jodit.min.js');
-		$document->addScript(JURI::root() . 'media/com_jodit/js/jodit-play/static/js/main.js');
+		$document->addScript(JURI::root() . 'media/com_jodit/js/jodit-play/static/js/main.js?v=' . $playversion);
 		$document->addStyleSheet(JURI::root() . 'media/com_jodit/js/jodit/jodit.min.css');
 		$document->addStyleSheet(JURI::root() . 'media/com_jodit/js/jodit-play/static/css/main.css');
 
