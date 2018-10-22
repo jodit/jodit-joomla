@@ -75,7 +75,7 @@ class JoditViewJodit extends HtmlView
 	 */
 	private function toolbar()
 	{
-		JToolBarHelper::title(Text::_('COM_JODIT'), '');
+		JToolBarHelper::title(JText::_('COM_JODIT'), '');
 
 		// Options button.
 		if (Factory::getUser()->authorise('core.admin', 'com_jodit'))

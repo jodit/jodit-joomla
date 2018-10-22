@@ -26,7 +26,7 @@ defined('_JEXEC') or die;
             >
                 <i class="icon-equalizer"></i>
                 <h6 class="thumbnail-title text-center">
-                    Editor Configuration
+                    <?php echo JText::_('COM_JODIT_CONFIG'); ?>
                 </h6>
             </a>
         </li>
