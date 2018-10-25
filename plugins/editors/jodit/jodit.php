@@ -43,7 +43,7 @@ class plgEditorJodit extends JPlugin {
 	 * @since  3.2
 	 */
 	protected $app = null;
-	protected $version = '3.1.11';
+	protected $version = '3.1.12';
 
 	/**
 	 * Initialises the Editor.
