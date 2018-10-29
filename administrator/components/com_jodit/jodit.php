@@ -20,6 +20,7 @@ if (!Factory::getUser()->authorise('core.manage', 'com_jodit')) {
 }
 
 // Require the helper
+require_once JPATH_COMPONENT_ADMINISTRATOR . '/helpers/jodit.php';
 require_once JPATH_COMPONENT_ADMINISTRATOR . '/helpers/autoload.php';
 
 
