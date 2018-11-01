@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <updates>
     <update>
-        <name>Jodit Editor v.3.1.18</name>
+        <name>Jodit Editor v.3.1.19</name>
         <description>Jodit Editor Component</description>
         <element>pkg_jodit</element>
         <type>package</type>
-        <version>3.1.18</version>
-        <infourl title="Jodit Editor v.3.1.18">https://xdsoft.net/jodit/</infourl>
+        <version>3.1.19</version>
+        <infourl title="Jodit Editor v.3.1.19">https://xdsoft.net/jodit/</infourl>
         <downloads>
             <downloadurl type="upgrade" format="zip">https://github.com/jodit/jodit-joomla/raw/master/tmp/pkg_jodit.zip</downloadurl>
         </downloads>
