@@ -43,7 +43,7 @@ class plgEditorJodit extends JPlugin {
 	 * @since  3.2
 	 */
 	protected $app = null;
-	protected $version = '3.1.47';
+	protected $version = '3.1.48';
 
 	/**
 	 * Initialises the Editor.
@@ -101,17 +101,6 @@ class plgEditorJodit extends JPlugin {
 	 * @return  void
 	 */
 	public function onGetInsertMethod($name) {
-		//static $done = false;
-       // if ($done) {
-	//		return true;
-	//	}
-//
-	//	$done = true;
-//
-       // JFactory::getDocument()->addScriptDeclaration(";function jInsertEditorText(text, editor) {
-       //     Jodit.instances[editor].selection.insertHTML(text)
-       // }");
-
         return null;
 	}
 
