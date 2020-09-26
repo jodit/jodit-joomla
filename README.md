@@ -1,5 +1,5 @@
 # Jodit Editor for Joomla
-Joomla Jodit editor package v.3.1.49
+Joomla Jodit editor package v.3.1.50
 
 * [Download](https://github.com/jodit/jodit-joomla/raw/master/tmp/pkg_jodit.zip)
 * [Jodit](https://xdsoft.net/jodit/)
