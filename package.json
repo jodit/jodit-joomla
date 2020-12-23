@@ -1,6 +1,6 @@
 {
   "name": "jodit-joomla",
-  "version": "3.1.54",
+  "version": "3.1.55",
   "description": "Joomla Editor Jodit",
   "main": "index.js",
   "private": true,
@@ -31,7 +31,7 @@
   "dependencies": {
     "archiver": "^2.1.1",
     "jodit": "^3.5.2",
-    "jodit-play": "^0.1.89",
+    "jodit-play": "^0.1.90",
     "replace": "^0.3.0"
   }
 }
