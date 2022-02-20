@@ -61,7 +61,7 @@ class JFormFieldPlay extends JFormField{
 		$document->addScript(JURI::root() . $this->_basePath() . '.js');
 
         $js = (array_filter(scandir(JPATH_ROOT . '/media/com_jodit/js/jodit-play/static/js'), function ($path) {
-            return preg_match('/\.js$/', $path);
+            return preg_match('/chunk\.js$/', $path);
         }));
         foreach ($js as $file) {
             $document->addScript(JURI::root() . 'media/com_jodit/js/jodit-play/static/js/' . $file . '?v=' . $playversion);
@@ -70,7 +70,7 @@ class JFormFieldPlay extends JFormField{
 		$document->addStyleSheet(JURI::root()  . $this->_basePath() . '.css');
 
         $css = (array_filter(scandir(JPATH_ROOT . '/media/com_jodit/js/jodit-play/static/css'), function ($path) {
-            return preg_match('/\.css$/', $path);
+            return preg_match('/chunk\.css$/', $path);
         }));
         foreach ($css as $file) {
             $document->addStyleSheet(JURI::root() . 'media/com_jodit/js/jodit-play/static/css/' . $file);
