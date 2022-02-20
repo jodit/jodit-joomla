@@ -12,6 +12,12 @@
 			<option value="0">JNO</option>
 		</field>
 		<field
+				name="jodit-pro-license"
+				type="text"
+				label="License for Jodit PRO"
+				default=""
+		/>
+		<field
 			label="Options"
 			name="play"
 			type="play"

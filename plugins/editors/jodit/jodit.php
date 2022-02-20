@@ -169,6 +169,7 @@ class plgEditorJodit extends JPlugin {
         $options = (object)(json_decode($params->get('play')) ?: JFormFieldPlay::$defaultConfig);
 
         $options->basePath = $this->_basePath();
+        $options->license = $params->get('jodit-pro-license') ?: '';
 
         if (empty($options->iframeCSSLinks)) {
 	        $options->iframeCSSLinks = [];
