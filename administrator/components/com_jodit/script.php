@@ -14,6 +14,8 @@ defined('_JEXEC') or die('Restricted access');
 //the name of the class must be the name of your component + InstallerScript
 class com_joditInstallerScript {
     function preflight( $type, $parent ) {
+        echo "preflight is working";
+
         foreach (['css', 'js'] as $type) {
             $path = JPATH_ROOT . '/media/com_jodit/js/jodit-play/static/' . $type;
             $js = scandir($path);
