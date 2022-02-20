@@ -8,6 +8,10 @@
  */
 namespace Jodit;
 
+/**
+ * Class Consts
+ * @package Jodit
+ */
 class Consts {
 	const ERROR_CODE_NOT_IMPLEMENTED = 501;
 	const ERROR_CODE_IS_NOT_WRITEBLE = 424;

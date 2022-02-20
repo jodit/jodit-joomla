@@ -26,7 +26,11 @@ class plgEditorJodit extends JPlugin {
 	/**
 	 * Base path for editor files
 	 */
-	protected $_basePath = 'media/com_jodit/js/jodit';
+    protected function _basePath() {
+        $params = \JComponentHelper::getComponent('com_jodit')->getParams();
+        $folder = $params->get('jodit-pro') === '1' ? 'jodit-pro/jodit.fat' : 'jodit/jodit.min';
+        return 'media/com_jodit/js/' . $folder;
+    }
 
 	/**
 	 * Load the language file on instantiation.
@@ -54,8 +58,9 @@ class plgEditorJodit extends JPlugin {
 	 */
 	public function onInit() {
         $doc = jFactory::getDocument();
-        $doc->addScript(JURI::root() . $this->_basePath . '/jodit.min.js?v=' . $this->version);
-        $doc->addStyleSheet(JURI::root() . $this->_basePath . '/jodit.min.css?v=' . $this->version);
+
+        $doc->addScript(JURI::root() . $this->_basePath() . '.js?v=' . $this->version);
+        $doc->addStyleSheet(JURI::root() . $this->_basePath() . '.css?v=' . $this->version);
 		return;
 	}
 
@@ -164,39 +169,39 @@ class plgEditorJodit extends JPlugin {
 	    $options->iframeCSSLinks[] = JURI::root() . 'media/com_jodit/css/editor.css';
 
 	    $options->uploader = [
-	    	'url' =>   ('index.php?option=com_jodit&task=filebrowser&action=fileUpload')
+	    	'url' =>   ('?option=com_jodit&task=filebrowser&action=fileUpload')
 	    ];
 
 	    $options->filebrowser = [
 		    'ajax' => [
-			    'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=fileUpload')
+			    'url'  =>   ('?option=com_jodit&task=filebrowser&action=fileUpload')
 		    ],
 		    'create' => [
-			    'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=folderCreate')
+			    'url'  =>   ('?option=com_jodit&task=filebrowser&action=folderCreate')
 		    ],
 		    'getLocalFileByUrl' => [
-			    'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=getlocalfilebyurl')
+			    'url'  =>   ('?option=com_jodit&task=filebrowser&action=getlocalfilebyurl')
 		    ],
 		    'resize' => [
-			    'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=imageresize')
+			    'url'  =>   ('?option=com_jodit&task=filebrowser&action=imageresize')
 		    ],
 		    'crop'=> [
-			    'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=imagecrop')
+			    'url'  =>   ('?option=com_jodit&task=filebrowser&action=imagecrop')
 		    ],
 		    'move'=> [
-			    'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=filemove')
+			    'url'  =>   ('?option=com_jodit&task=filebrowser&action=filemove')
 		    ],
 		    'remove'=> [
-			    'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=fileremove')
+			    'url'  =>   ('?option=com_jodit&task=filebrowser&action=fileremove')
 		    ],
 		    'items'=> [
-			    'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=files')
+			    'url'  =>   ('?option=com_jodit&task=filebrowser&action=files')
 		    ],
 		    'folder'=> [
-			    'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=folders')
+			    'url'  =>   ('?option=com_jodit&task=filebrowser&action=folders')
 		    ],
 		    'permissions'=> [
-			    'url'  =>   ('index.php?option=com_jodit&task=filebrowser&action=permissions')
+			    'url'  =>   ('?option=com_jodit&task=filebrowser&action=permissions')
 		    ],
 	    ];
 

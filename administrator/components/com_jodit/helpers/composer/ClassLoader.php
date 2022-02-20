@@ -1,13 +1,4 @@
 <?php
-/**
- * @package    jodit
- *
- * @author     Valeriy Chupurnov <chupurnov@gmail.com>
- * @copyright  A copyright
- * @license    GNU General Public License version 2 or later; see LICENSE
- * @link       https://xdsoft.net/jodit/
- */
-
 
 /*
  * This file is part of Composer.
@@ -46,11 +37,13 @@ namespace Composer\Autoload;
  *
  * @author Fabien Potencier <fabien@symfony.com>
  * @author Jordi Boggiano <j.boggiano@seld.be>
- * @see    http://www.php-fig.org/psr/psr-0/
- * @see    http://www.php-fig.org/psr/psr-4/
+ * @see    https://www.php-fig.org/psr/psr-0/
+ * @see    https://www.php-fig.org/psr/psr-4/
  */
 class ClassLoader
 {
+    private $vendorDir;
+
     // PSR-4
     private $prefixLengthsPsr4 = array();
     private $prefixDirsPsr4 = array();
@@ -66,10 +59,17 @@ class ClassLoader
     private $missingClasses = array();
     private $apcuPrefix;
 
+    private static $registeredLoaders = array();
+
+    public function __construct($vendorDir = null)
+    {
+        $this->vendorDir = $vendorDir;
+    }
+
     public function getPrefixes()
     {
         if (!empty($this->prefixesPsr0)) {
-            return call_user_func_array('array_merge', $this->prefixesPsr0);
+            return call_user_func_array('array_merge', array_values($this->prefixesPsr0));
         }
 
         return array();
@@ -288,7 +288,7 @@ class ClassLoader
      */
     public function setApcuPrefix($apcuPrefix)
     {
-        $this->apcuPrefix = function_exists('apcu_fetch') && ini_get('apc.enabled') ? $apcuPrefix : null;
+        $this->apcuPrefix = function_exists('apcu_fetch') && filter_var(ini_get('apc.enabled'), FILTER_VALIDATE_BOOLEAN) ? $apcuPrefix : null;
     }
 
     /**
@@ -309,6 +309,15 @@ class ClassLoader
     public function register($prepend = false)
     {
         spl_autoload_register(array($this, 'loadClass'), true, $prepend);
+
+        if (null === $this->vendorDir) {
+            //no-op
+        } elseif ($prepend) {
+            self::$registeredLoaders = array($this->vendorDir => $this) + self::$registeredLoaders;
+        } else {
+            unset(self::$registeredLoaders[$this->vendorDir]);
+            self::$registeredLoaders[$this->vendorDir] = $this;
+        }
     }
 
     /**
@@ -317,6 +326,10 @@ class ClassLoader
     public function unregister()
     {
         spl_autoload_unregister(array($this, 'loadClass'));
+
+        if (null !== $this->vendorDir) {
+            unset(self::$registeredLoaders[$this->vendorDir]);
+        }
     }
 
     /**
@@ -374,6 +387,16 @@ class ClassLoader
         }
 
         return $file;
+    }
+
+    /**
+     * Returns the currently registered loaders indexed by their corresponding vendor directories.
+     *
+     * @return self[]
+     */
+    public static function getRegisteredLoaders()
+    {
+        return self::$registeredLoaders;
     }
 
     private function findFileWithExtension($class, $ext)

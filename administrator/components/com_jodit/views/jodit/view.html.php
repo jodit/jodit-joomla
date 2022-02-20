@@ -38,6 +38,12 @@ class JoditViewJodit extends HtmlView
 	 */
 	protected $sidebar = '';
 
+    protected function _basePath() {
+        $params = \JComponentHelper::getComponent('com_jodit')->getParams();
+        $folder = $params->get('jodit-pro') === '1' ? 'jodit-pro/jodit.fat' : 'jodit/jodit.min';
+        return 'media/com_jodit/js/' . $folder;
+    }
+
 	/**
 	 * Execute and display a template script.
 	 *
@@ -59,8 +65,8 @@ class JoditViewJodit extends HtmlView
 		$this->sidebar = JHtmlSidebar::render();
 
 		$document = JFactory::getDocument();
-		$document->addScript(JURI::root() . 'media/com_jodit/js/jodit/jodit.min.js');
-		$document->addStyleSheet(JURI::root() . 'media/com_jodit/js/jodit/jodit.min.css');
+		$document->addScript(JURI::root() . $this.$this->_basePath() . '.js');
+		$document->addStyleSheet(JURI::root() . $this.$this->_basePath() .  '.css');
 		$document->addStyleSheet(JURI::root() . 'media/com_jodit/css/admin.css');
 		// Display it all
 		return parent::display($tpl);

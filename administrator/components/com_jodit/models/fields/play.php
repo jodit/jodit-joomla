@@ -13,6 +13,12 @@ defined('JPATH_BASE') or die;
 jimport('joomla.form.helper');
 
 class JFormFieldPlay extends JFormField{
+    protected function _basePath() {
+        $params = \JComponentHelper::getComponent('com_jodit')->getParams();
+        $folder = $params->get('jodit-pro') === '1' ? 'jodit-pro/jodit.fat' : 'jodit/jodit.min';
+        return 'media/com_jodit/js/' . $folder;
+    }
+
 	static $defaultConfig = array(
 		"height" => 500,
 		"iframe" => true,
@@ -52,10 +58,23 @@ class JFormFieldPlay extends JFormField{
 
 		$playversion = json_decode(file_get_contents(JPATH_ROOT . '/media/com_jodit/js/jodit-play/package.json'))->version;
 
-		$document->addScript(JURI::root() . 'media/com_jodit/js/jodit/jodit.min.js');
-		$document->addScript(JURI::root() . 'media/com_jodit/js/jodit-play/static/js/main.js?v=' . $playversion);
-		$document->addStyleSheet(JURI::root() . 'media/com_jodit/js/jodit/jodit.min.css');
-		$document->addStyleSheet(JURI::root() . 'media/com_jodit/js/jodit-play/static/css/main.css');
+		$document->addScript(JURI::root() . $this->_basePath() . '.js');
+
+        $js = (array_filter(scandir(JPATH_ROOT . '/media/com_jodit/js/jodit-play/static/js'), function ($path) {
+            return preg_match('/\.js$/', $path);
+        }));
+        foreach ($js as $file) {
+            $document->addScript(JURI::root() . 'media/com_jodit/js/jodit-play/static/js/' . $file . '?v=' . $playversion);
+        }
+
+		$document->addStyleSheet(JURI::root()  . $this->_basePath() . '.css');
+
+        $css = (array_filter(scandir(JPATH_ROOT . '/media/com_jodit/js/jodit-play/static/css'), function ($path) {
+            return preg_match('/\.css$/', $path);
+        }));
+        foreach ($css as $file) {
+            $document->addStyleSheet(JURI::root() . 'media/com_jodit/js/jodit-play/static/css/' . $file);
+        }
 
 		$document->addStyleDeclaration('.form-horizontal .controls{
 			margin-left: 0 !important;

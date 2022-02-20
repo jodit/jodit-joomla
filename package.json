@@ -30,8 +30,9 @@
   "homepage": "https://github.com/jodit/jodit-joomla#readme",
   "dependencies": {
     "archiver": "^2.1.1",
-    "jodit": "^3.9.4",
-    "jodit-play": "^0.1.111",
+    "jodit": "^3.14.3",
+    "jodit-play": "^0.1.126",
+    "jodit-pro": "^1.2.45",
     "replace": "^0.3.0"
   }
 }

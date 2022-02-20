@@ -2,6 +2,17 @@
 <config>
 	<fieldset name="basic" label="COM_JODIT_BASIC_OPTIONS" addfieldpath="administrator/components/com_jodit/models/fields">
 		<field
+				name="jodit-pro"
+				type="radio"
+				label="Jodit Pro"
+				default="0"
+				class="btn-group"
+		>
+			<option value="1">JYES</option>
+			<option value="0">JNO</option>
+		</field>
+		<field
+			label="Options"
 			name="play"
 			type="play"
 		/>

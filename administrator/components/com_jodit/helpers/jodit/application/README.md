@@ -2,7 +2,8 @@
 
 Default application for project [Jodit Application](https://github.com/xdan/jodit-connectors)
 
-[Read more about Jodit](https://xdsoft.net/jodit/)
+* [Read more about Jodit](https://xdsoft.net/jodit/)
+* [Chagelog](./CHANGELOG.md)
 
 
 ### Run tests
@@ -14,8 +15,13 @@ composer install
 
 Start PHP server
 ```bash
-php -S localhost:8181 -t ./
+npm start
 ```
+or
+```bash
+cd ./docker && docker-compose up
+```
+
 Run tests
 ```bash
 ./vendor/bin/codecept run

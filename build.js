@@ -54,7 +54,7 @@ const license = `/**
  * @link       https://xdsoft.net/jodit/
  */`;
 
-function appendCopyrright(appendFile){
+function appendCopyRight(appendFile){
     if (/\.php$/.test(appendFile)) {
         let data = fs.readFileSync(appendFile,  "utf8"),
             dataOld = data;
@@ -89,7 +89,7 @@ function eachFile(folder) {
         if (st.isDirectory()) {
             eachFile(folder + '/' + file);
         } else {
-            appendCopyrright(folder + '/' + file);
+            appendCopyRight(folder + '/' + file);
         }
     })
 }
@@ -129,6 +129,7 @@ zip('tmp/plg_editors_jodit.zip', {
     return zip('tmp/com_jodit.zip', {
         'administrator/': 'administrator/',
         'media/': 'media/',
+        'node_modules/jodit-pro/build/': 'media/com_jodit/js/jodit-pro/',
         'node_modules/jodit/build/': 'media/com_jodit/js/jodit/',
         'node_modules/jodit-play/build/': 'media/com_jodit/js/jodit-play/',
         'manifest.xml': 'manifest.xml',

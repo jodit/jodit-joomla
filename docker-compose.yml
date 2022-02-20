@@ -1,0 +1,46 @@
+version: '3.1'
+
+services:
+  joomla:
+    image: joomla:4.1.0-php7.4-apache
+    restart: always
+    links:
+      - mysql
+    ports:
+      - 8180:80
+
+    volumes:
+      - ./server/configs/php.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./server/tmp:/var/www/html/tmp
+      - ./administrator/components/com_jodit:/var/www/html/administrator/components/com_jodit
+      - ./media/com_jodit:/var/www/html/media/com_jodit
+      - ./plugins/editors/jodit:/var/www/html/plugins/editors/jodit
+
+    environment:
+      JOOMLA_DB_USER: root
+      JOOMLA_DB_HOST: mysql:3306
+      JOOMLA_DB_PASSWORD: example
+      JOOMLA_DB_NAME: joomladb
+
+  mysql:
+    image: mysql
+    restart: always
+
+    command:
+      --character-set-server=utf8
+      --collation-server=utf8_general_ci
+      --default-authentication-plugin=mysql_native_password
+      --sql-mode=NO_AUTO_VALUE_ON_ZERO
+
+    ports:
+      - 3301:3306
+
+    volumes:
+      - './server/data:/var/lib/mysql'
+
+    expose:
+      - 3301
+
+    environment:
+      MYSQL_ROOT_PASSWORD: "example"
+      MYSQL_DATABASE: joomladb

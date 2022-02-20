@@ -5,3 +5,9 @@
 /composer.lock
 .DS_Store
 tmp/.DS_Store
+server/data
+server/tmp
+/media/com_jodit/js/jodit/
+/media/com_jodit/js/jodit-play/
+/media/com_jodit/js/jodit-pro/
+/administrator/components/com_jodit/helpers/

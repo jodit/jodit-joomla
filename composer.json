@@ -9,9 +9,12 @@
         }
     ],
     "require": {
-        "jodit/application": "^2.0"
+        "jodit/application": "^3.0.27"
     },
     "config": {
         "vendor-dir": "administrator/components/com_jodit/helpers"
+    },
+    "archive": {
+        "exclude": ["server", "screen", "node_modules", "tmp"]
     }
 }
