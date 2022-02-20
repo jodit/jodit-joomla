@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '4055a58a59e2f60936179b8c2e929a8bff36d57d',
+    'reference' => 'c62911696f0e1c9f9586eeed2ee056937be7ae0f',
     'name' => 'jodit/jodit-joomla',
   ),
   'versions' => 
@@ -45,7 +45,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '4055a58a59e2f60936179b8c2e929a8bff36d57d',
+      'reference' => 'c62911696f0e1c9f9586eeed2ee056937be7ae0f',
     ),
     'league/color-extractor' => 
     array (
