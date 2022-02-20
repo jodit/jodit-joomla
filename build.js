@@ -25,26 +25,6 @@ replace({
     silent: true,
 });
 
-replace({
-    regex: "error_reporting\\([^\\)]+\\);",
-    replacement: '',
-    paths: [
-        __dirname + '/administrator/components/com_jodit/helpers/jodit/application/src/BaseApplication.php',
-    ],
-    recursive: true,
-    silent: true,
-});
-
-replace({
-    regex: "This software is licensed under the MIT license: http://opensource.org/licenses/MIT",
-    replacement: 'GNU General Public License version 2 or later; see LICENSE',
-    paths: [
-        __dirname + '/administrator/components/com_jodit/helpers/abeautifulsite/simpleimage/src/abeautifulsite/SimpleImage.php',
-    ],
-    recursive: true,
-    silent: true,
-});
-
 const license = `/**
  * @package    jodit
  *
