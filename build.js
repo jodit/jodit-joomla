@@ -113,6 +113,7 @@ zip('tmp/plg_editors_jodit.zip', {
         'node_modules/jodit/build/': 'media/com_jodit/js/jodit/',
         'node_modules/jodit-play/build/': 'media/com_jodit/js/jodit-play/',
         'manifest.xml': 'manifest.xml',
+        'administrator/components/com_jodit/script.php': 'script.php',
     })
 })
 .then(() => {
