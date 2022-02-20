@@ -28,6 +28,12 @@ class plgEditorJodit extends JPlugin {
 	 */
     protected function _basePath() {
         $params = \JComponentHelper::getComponent('com_jodit')->getParams();
+        $folder = $params->get('jodit-pro') === '1' ? 'jodit-pro/' : 'jodit/';
+        return 'media/com_jodit/js/' . $folder;
+    }
+
+    protected function _basePathWithPrefix() {
+        $params = \JComponentHelper::getComponent('com_jodit')->getParams();
         $folder = $params->get('jodit-pro') === '1' ? 'jodit-pro/jodit.fat' : 'jodit/jodit.min';
         return 'media/com_jodit/js/' . $folder;
     }
@@ -59,8 +65,8 @@ class plgEditorJodit extends JPlugin {
 	public function onInit() {
         $doc = jFactory::getDocument();
 
-        $doc->addScript(JURI::root() . $this->_basePath() . '.js?v=' . $this->version);
-        $doc->addStyleSheet(JURI::root() . $this->_basePath() . '.css?v=' . $this->version);
+        $doc->addScript(JURI::root() . $this->_basePathWithPrefix() . '.js?v=' . $this->version);
+        $doc->addStyleSheet(JURI::root() . $this->_basePathWithPrefix() . '.css?v=' . $this->version);
 		return;
 	}
 
@@ -161,6 +167,8 @@ class plgEditorJodit extends JPlugin {
 
 	    JFormFieldPlay::$defaultConfig['iframeBaseUrl'] = JUri::root(true);
         $options = (object)(json_decode($params->get('play')) ?: JFormFieldPlay::$defaultConfig);
+
+        $options->basePath = $this->_basePath();
 
         if (empty($options->iframeCSSLinks)) {
 	        $options->iframeCSSLinks = [];

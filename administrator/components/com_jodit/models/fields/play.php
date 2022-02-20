@@ -61,7 +61,7 @@ class JFormFieldPlay extends JFormField{
 		$document->addScript(JURI::root() . $this->_basePath() . '.js');
 
         $js = (array_filter(scandir(JPATH_ROOT . '/media/com_jodit/js/jodit-play/static/js'), function ($path) {
-            return preg_match('/chunk\.js$/', $path);
+            return preg_match('/chunk\.js$/', $path) or preg_match('/runtime-main.*\.js$/', $path);
         }));
         foreach ($js as $file) {
             $document->addScript(JURI::root() . 'media/com_jodit/js/jodit-play/static/js/' . $file . '?v=' . $playversion);
