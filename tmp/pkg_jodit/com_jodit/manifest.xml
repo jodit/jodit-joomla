@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <extension type="component" version="3.8" method="upgrade">
 	<name>COM_JODIT</name>
-	<creationDate>3.2.10</creationDate>
+	<creationDate>3.2.11</creationDate>
 	<author>Chupurnov Valeriy</author>
 	<authorEmail>chupurnov@gmail.com</authorEmail>
 	<authorUrl>https://xdsoft.net/jodit/</authorUrl>
 	<copyright>xdsoft.net</copyright>
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
-	<version>3.2.10</version>
+	<version>3.2.11</version>
 	<description>COM_JODIT_XML_DESCRIPTION</description>
+	<scriptfile>script.php</scriptfile>
 
 	<!-- Media files -->
 	<media folder="media/com_jodit" destination="com_jodit">

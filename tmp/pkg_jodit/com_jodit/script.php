@@ -13,10 +13,6 @@ defined('_JEXEC') or die('Restricted access');
 
 //the name of the class must be the name of your component + InstallerScript
 class com_joditInstallerScript {
-    public function update($parent) {
-        echo "update is working";
-    }
-
     function preflight( $type, $parent ) {
         echo "preflight is working";
 

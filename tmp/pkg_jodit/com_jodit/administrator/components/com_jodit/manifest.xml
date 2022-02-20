@@ -9,7 +9,6 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<version>3.2.7</version>
 	<description>COM_JODIT_XML_DESCRIPTION</description>
-	<scriptfile>script.php</scriptfile>
 
 	<!-- Media files -->
 	<media folder="media/com_jodit" destination="com_jodit">

@@ -1,6 +1,6 @@
 {
   "name": "public",
-  "version": "3.2.10",
+  "version": "3.2.11",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "jodit": "^3.2.10"
+    "jodit": "^3.2.11"
   }
 }
