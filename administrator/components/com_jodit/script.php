@@ -13,7 +13,7 @@ defined('_JEXEC') or die('Restricted access');
 
 class pkg_joditInstallerScript {
     function preflight( $type, $parent ) {
-        echo "Preflight:<br>";
+        echo "Preflight remove old assets<br>";
 
         foreach (['css', 'js'] as $type) {
             $path = JPATH_ROOT . '/media/com_jodit/js/jodit-play/static/' . $type;
@@ -21,9 +21,7 @@ class pkg_joditInstallerScript {
 
 
             foreach ($js as $file) {
-                echo "Remove " . $path . $file . '<br>';
-
-                unlink($path . $file);
+                unlink($path . '/' . $file);
             }
         }
     }
