@@ -4,18 +4,20 @@
 		<author>Chupurnov Valeriy</author>
 		<creationDate>February 2018</creationDate>
 		<packagename>jodit</packagename>
-		<version>3.2.12</version>
+		<version>3.2.13</version>
 		<url>https://xdfodt.net/jodit/</url>
 		<packager>Chupurnov Valeriy</packager>
 		<packagerurl>https://xdfodt.net</packagerurl>
-		<description>Jodit Editor v.3.2.12</description>
+		<description>Jodit Editor v.3.2.13</description>
 		<license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+		<scriptfile>script.php</scriptfile>
+
 		<files>
 			<file type="plugin" id="plg_editors_jodit" group="editors">plg_editors_jodit.zip</file>
 			<file type="component" id="com_jodit">com_jodit.zip</file>
 		</files>
 		
 		<updateservers>
-			<server type="extension" priority="1" name="Jodit Editor v.3.2.12">https://raw.githubusercontent.com/jodit/jodit-joomla/master/update.xml</server>
+			<server type="extension" priority="1" name="Jodit Editor v.3.2.13">https://raw.githubusercontent.com/jodit/jodit-joomla/master/update.xml</server>
 		</updateservers> 
 	 </extension>

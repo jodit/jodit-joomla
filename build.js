@@ -113,7 +113,6 @@ zip('tmp/plg_editors_jodit.zip', {
         'node_modules/jodit/build/': 'media/com_jodit/js/jodit/',
         'node_modules/jodit-play/build/': 'media/com_jodit/js/jodit-play/',
         'manifest.xml': 'manifest.xml',
-        'administrator/components/com_jodit/script.php': 'script.php',
     })
 })
 .then(() => {
@@ -122,6 +121,7 @@ zip('tmp/plg_editors_jodit.zip', {
         'tmp/plg_editors_jodit.zip': 'plg_editors_jodit.zip',
         'tmp/com_jodit.zip': 'com_jodit.zip',
         'pkg_jodit.xml': 'pkg_jodit.xml',
+        'administrator/components/com_jodit/script.php': 'script.php',
     })
 })
 .then(() => {
