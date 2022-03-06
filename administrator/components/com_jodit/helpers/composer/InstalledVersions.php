@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '9882cdfc45b8b31cbb937bfb53dacb281cf77c03',
+    'reference' => 'c92a603fafaa3a8e8f4324226467ecbc5665b64c',
     'name' => 'jodit/jodit-joomla',
   ),
   'versions' => 
@@ -69,7 +69,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '9882cdfc45b8b31cbb937bfb53dacb281cf77c03',
+      'reference' => 'c92a603fafaa3a8e8f4324226467ecbc5665b64c',
     ),
     'league/color-extractor' => 
     array (
