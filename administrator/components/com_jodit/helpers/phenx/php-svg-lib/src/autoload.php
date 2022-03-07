@@ -1,6 +1,4 @@
 <?php
-defined('_JEXEC') or die;
-?><?php
 /**
  * @package php-svg-lib
  * @link    http://github.com/PhenX/php-svg-lib
