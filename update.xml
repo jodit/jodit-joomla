@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <updates>
     <update>
-        <name>Jodit Editor v.3.2.26</name>
+        <name>Jodit Editor v.3.2.27</name>
         <description>Jodit Editor Component</description>
         <element>pkg_jodit</element>
         <type>package</type>
-        <version>3.2.26</version>
-        <infourl title="Jodit Editor v.3.2.26">https://xdsoft.net/jodit/</infourl>
+        <version>3.2.27</version>
+        <infourl title="Jodit Editor v.3.2.27">https://xdsoft.net/jodit/</infourl>
         <downloads>
-            <downloadurl type="upgrade" format="zip">https://github.com/jodit/jodit-joomla/raw/master/tmp/pkg_jodit.zip?3.2.26</downloadurl>
+            <downloadurl type="upgrade" format="zip">https://github.com/jodit/jodit-joomla/raw/master/tmp/pkg_jodit.zip?3.2.27</downloadurl>
         </downloads>
         <tags>
             <tag>stable</tag>
