@@ -1,6 +1,6 @@
 {
   "name": "jodit-joomla",
-  "version": "3.2.27",
+  "version": "3.2.28",
   "description": "Joomla Editor Jodit",
   "main": "index.js",
   "private": true,
