@@ -1,4 +1,13 @@
 <?php
+/**
+ * @package    jodit
+ *
+ * @author     Valeriy Chupurnov <chupurnov@gmail.com>
+ * @copyright  A copyright
+ * @license    GNU General Public License version 2 or later; see LICENSE
+ * @link       https://xdsoft.net/jodit/
+ */
+
 //
 // SimpleImage
 //
@@ -14,6 +23,8 @@
 //
 
 namespace claviska;
+defined('_JEXEC') or die;
+
 
 /**
  * A PHP class that makes working with images as simple as possible.
