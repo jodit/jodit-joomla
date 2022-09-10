@@ -23,7 +23,7 @@ class File extends IFile {
 	 * @return File
 	 * @throws Exception
 	 */
-	public static function create ($path) {
+	public static function create($path) {
 		return new File($path);
 	}
 
@@ -33,7 +33,7 @@ class File extends IFile {
 	 * @param string $path
 	 * @throws Exception
 	 */
-	protected function __construct ($path) {
+	protected function __construct($path) {
 		$path = realpath($path);
 
 		if (!$path) {
@@ -52,7 +52,7 @@ class File extends IFile {
 	 * @param Config $source
 	 * @return bool
 	 */
-	public function isGoodFile ($source) {
+	public function isGoodFile($source) {
 		$info = pathinfo($this->path);
 
 		if (
@@ -85,7 +85,7 @@ class File extends IFile {
 	 * Remove file
 	 * @throws Exception
 	 */
-	public function remove () {
+	public function remove() {
 		$file = basename($this->path);
 		$thumb =
 			dirname($this->path) .
@@ -109,36 +109,23 @@ class File extends IFile {
 	/**
 	 * @return string
 	 */
-	public function getPath () {
+	public function getPath() {
 		return str_replace('\\', Consts::DS, $this->path);
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getFolder () {
+	public function getFolder() {
 		return dirname($this->getPath()) . Consts::DS;
 	}
 
 	/**
 	 * @return string
 	 */
-	public function getName () {
-		return basename($this->path);
-	}
-
-	/**
-	 * @return int
-	 */
-	public function getSize () {
-		return filesize($this->getPath());
-	}
-
-	/**
-	 * @return false|int
-	 */
-	public function getTime () {
-		return filemtime($this->getPath());
+	public function getName() {
+		$parts = explode(Consts::DS, $this->getPath());
+		return array_pop($parts) ?: '';
 	}
 
 	/**
@@ -146,8 +133,34 @@ class File extends IFile {
 	 *
 	 * @return string
 	 */
-	public function getExtension () {
-		return pathinfo($this->getPath(), PATHINFO_EXTENSION);
+	public function getExtension() {
+		$parts = explode('.', $this->getName());
+		return array_pop($parts) ?: '';
+	}
+
+	/**
+	 * Get file basename(urf8 basename analogue)
+	 *
+	 * @return string
+	 */
+	public function getBasename() {
+		$parts = explode('.', $this->getName());
+		array_pop($parts);
+		return implode('.', $parts);
+	}
+
+	/**
+	 * @return int
+	 */
+	public function getSize() {
+		return filesize($this->getPath());
+	}
+
+	/**
+	 * @return false|int
+	 */
+	public function getTime() {
+		return filemtime($this->getPath());
 	}
 
 	/**
@@ -155,7 +168,7 @@ class File extends IFile {
 	 * @return string|string[]
 	 * @throws Exception
 	 */
-	public function getPathByRoot ($source) {
+	public function getPathByRoot($source) {
 		$path = preg_replace('#[\\\\/]#', '/', $this->getPath());
 		$root = preg_replace('#[\\\\/]#', '/', $source->getPath());
 
@@ -166,7 +179,7 @@ class File extends IFile {
 	 * Check by mimetype what file is image
 	 * @return bool
 	 */
-	public function isImage () {
+	public function isImage() {
 		try {
 			if ($this->isSVGImage()) {
 				return true;
@@ -181,7 +194,7 @@ class File extends IFile {
 				 * @param $filename
 				 * @return false|mixed
 				 */
-				function exif_imagetype ($filename) {
+				function exif_imagetype($filename) {
 					if ((list(, , $type) = getimagesize($filename)) !== false) {
 						return $type;
 					}
@@ -205,14 +218,14 @@ class File extends IFile {
 	 * Check file is SVG image
 	 * @return bool
 	 */
-	public function isSVGImage () {
+	public function isSVGImage() {
 		return strtolower($this->getExtension()) === 'svg';
 	}
 
 	/**
 	 * Send file for download
 	 */
-	public function send () {
+	public function send() {
 		header('Content-Description: File Transfer');
 		header('Content-Type: application/octet-stream');
 		header('Content-Disposition: attachment; filename=' . $this->getName());
@@ -224,6 +237,6 @@ class File extends IFile {
 		ob_clean();
 		flush();
 		readfile($this->getPath());
-		exit;
+		exit();
 	}
 }

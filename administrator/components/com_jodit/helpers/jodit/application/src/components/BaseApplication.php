@@ -158,13 +158,14 @@ abstract class BaseApplication {
 		set_exception_handler([$this, 'exceptionHandler']);
 
 		$this->config = new Config($config, null);
+
 		$this->request = new Request();
 
 		if ($this->config->allowCrossOrigin) {
 			$this->corsHeaders();
 		}
 
-		$this->action = $this->request->action;
+		$this->action = $this->request->action ?: 'default';
 
 		$this->config->access->setAccessList($this->config->accessControl);
 		Jodit::$app = $this;

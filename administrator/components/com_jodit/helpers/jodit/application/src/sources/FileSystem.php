@@ -1,13 +1,4 @@
 <?php
-/**
- * @package    jodit
- *
- * @author     Valeriy Chupurnov <chupurnov@gmail.com>
- * @copyright  A copyright
- * @license    GNU General Public License version 2 or later; see LICENSE
- * @link       https://xdsoft.net/jodit/
- */
-
 
 namespace Jodit\sources;
 
@@ -61,14 +52,19 @@ class FileSystem extends ISource {
 		}
 
 		$thumbName =
-			$path . $this->thumbFolderName . Consts::DS . $file->getName();
+			$path .
+			$this->thumbFolderName .
+			Consts::DS .
+			Helper::slugify($file->getBasename()) .
+			'.' .
+			$file->getExtension();
 
 		if (!$file->isImage()) {
 			$thumbName =
 				$path .
 				$this->thumbFolderName .
 				Consts::DS .
-				Helper::makeSafe($file->getName()) .
+				Helper::slugify($file->getName()) .
 				'.svg';
 		}
 
@@ -136,11 +132,18 @@ class FileSystem extends ISource {
 
 		$config = $this;
 
-		$offset = Jodit::$app->request->getField('mods/offset', 0);
-		$limit = Jodit::$app->request->getField(
+		$offset = (int)Jodit::$app->request->getField('mods/offset', 0);
+		if (!is_numeric($offset)) {
+			throw new Exception('Offset is not numeric');
+		}
+
+		$limit = (int)Jodit::$app->request->getField(
 			'mods/limit',
 			$this->countInChunk
 		);
+		if (!is_numeric($limit)) {
+			throw new Exception('limit is not numeric');
+		}
 
 		$sortBy = (string) Jodit::$app->request->getField(
 			'mods/sortBy',

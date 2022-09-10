@@ -39,7 +39,7 @@ class AccessControl {
 	 */
 	public function checkPermission(
 		$role,
-		$action,
+		string $action,
 		$path = '/',
 		$fileExtension = '*'
 	) {
@@ -56,7 +56,7 @@ class AccessControl {
 	 * @param string $fileExtension
 	 * @return bool
 	 */
-	public function isAllow($role, $action, $path = '/', $fileExtension = '*') {
+	public function isAllow($role, string $action, $path = '/', $fileExtension = '*') {
 		$action = Helper::upperize($action);
 
 		$allow = null;

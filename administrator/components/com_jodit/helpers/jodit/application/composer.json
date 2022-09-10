@@ -21,11 +21,12 @@
 		"abeautifulsite/simpleimage": "^3.6.0",
 		"ext-gd": "*",
 		"ext-json": "*",
-		"dompdf/dompdf": "^1.1"
+		"dompdf/dompdf": "^1.1",
+		"cocur/slugify": "^4.2",
+		"ext-mbstring": "*"
 	},
 	"require-dev": {
 		"codeception/codeception": "^4.1",
-		"flow/jsonpath": "^0.3.4",
 		"vimeo/psalm": "^4.4",
 		"codeception/module-rest": "^1.2",
 		"codeception/module-phpbrowser": "^1.0",

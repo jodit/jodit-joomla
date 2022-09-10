@@ -30,7 +30,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '7dac3272078a89075467b84a8145f66ae28682d3',
+    'reference' => 'c5f812cab3182487a8f8d92fe019d188daeca92b',
     'name' => 'jodit/jodit-joomla',
   ),
   'versions' => 
@@ -44,6 +44,15 @@ private static $installed = array (
       ),
       'reference' => 'abd15ced313c7b8041d7d73d8d2398b4f2510cf1',
     ),
+    'cocur/slugify' => 
+    array (
+      'pretty_version' => 'v4.2.0',
+      'version' => '4.2.0.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => '7e7d03067d1075b1147090b3e1df672dfffb9dc3',
+    ),
     'dompdf/dompdf' => 
     array (
       'pretty_version' => 'v1.2.2',
@@ -55,12 +64,12 @@ private static $installed = array (
     ),
     'jodit/application' => 
     array (
-      'pretty_version' => '3.0.27',
-      'version' => '3.0.27.0',
+      'pretty_version' => '3.0.30',
+      'version' => '3.0.30.0',
       'aliases' => 
       array (
       ),
-      'reference' => '3d1dddde02d29de277bda9d25e6b53593e30e2d0',
+      'reference' => 'e04994e985bd060b1c835e9dab62f2182da78937',
     ),
     'jodit/jodit-joomla' => 
     array (
@@ -69,7 +78,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '7dac3272078a89075467b84a8145f66ae28682d3',
+      'reference' => 'c5f812cab3182487a8f8d92fe019d188daeca92b',
     ),
     'league/color-extractor' => 
     array (

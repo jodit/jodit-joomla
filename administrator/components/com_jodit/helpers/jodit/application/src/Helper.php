@@ -9,6 +9,7 @@
 
 namespace Jodit;
 
+use Cocur\Slugify\Slugify;
 use Exception;
 use InvalidArgumentException;
 
@@ -37,10 +38,10 @@ abstract class Helper {
 	 */
 	public static function humanFileSize($bytes, $decimals = 2) {
 		$size = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-		$factor = floor((strlen($bytes) - 1) / 3);
+		$factor = (int) floor((strlen((int) $bytes) - 1) / 3);
 
 		return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) .
-			$size[(int) $factor];
+			$size[$factor];
 	}
 
 	/**
@@ -156,6 +157,15 @@ abstract class Helper {
 	}
 
 	/**
+	 * @param string $name
+	 * @return string
+	 */
+	public static function slugify($name) {
+		$slugify = new Slugify();
+		return $slugify->slugify($name);
+	}
+
+	/**
 	 * Download remote file on server
 	 *
 	 * @param string $url
@@ -164,7 +174,7 @@ abstract class Helper {
 	 */
 	public static function downloadRemoteFile($url, $destinationFilename) {
 		if (!ini_get('allow_url_fopen')) {
-			throw new Exception('allow_url_fopen is disable', 501);
+			throw new Exception('allow_url_fopen is disabled', 501);
 		}
 
 		$message = 'File was not loaded';
@@ -218,7 +228,7 @@ abstract class Helper {
 	 * @param string $string
 	 * @return string
 	 */
-	public static function upperize($string) {
+	public static function upperize(string $string) {
 		$string = preg_replace('#([a-z])([A-Z])#', '\1_\2', $string);
 		return strtoupper($string);
 	}
@@ -321,7 +331,7 @@ abstract class Helper {
 	 * @param array $array
 	 * @return int|string|null
 	 */
-	public static function arrayKeyFirst(array $array){
+	public static function arrayKeyFirst(array $array) {
 		if (count($array)) {
 			reset($array);
 			return key($array);

@@ -1,13 +1,4 @@
 <?php
-/**
- * @package    jodit
- *
- * @author     Valeriy Chupurnov <chupurnov@gmail.com>
- * @copyright  A copyright
- * @license    GNU General Public License version 2 or later; see LICENSE
- * @link       https://xdsoft.net/jodit/
- */
-
 
 namespace Jodit\interfaces;
 
@@ -47,6 +38,16 @@ abstract class IFile {
 	abstract public function getName();
 
 	/**
+	 * @return string
+	 */
+	abstract public function getExtension();
+
+	/**
+	 * @return string
+	 */
+	abstract public function getBasename();
+
+	/**
 	 * @return int
 	 */
 	abstract public function getSize();
@@ -56,10 +57,7 @@ abstract class IFile {
 	 */
 	abstract public function getTime();
 
-	/**
-	 * @return string
-	 */
-	abstract public function getExtension();
+
 
 	/**
 	 * @param ISource $source

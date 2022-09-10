@@ -11,5 +11,6 @@ return array(
     'Jodit\\' => array($vendorDir . '/jodit/application/src'),
     'FontLib\\' => array($vendorDir . '/phenx/php-font-lib/src/FontLib'),
     'Dompdf\\' => array($vendorDir . '/dompdf/dompdf/src'),
+    'Cocur\\Slugify\\' => array($vendorDir . '/cocur/slugify/src'),
     '' => array($vendorDir . '/league/color-extractor/src'),
 );
