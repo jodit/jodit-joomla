@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => 'c5f812cab3182487a8f8d92fe019d188daeca92b',
+    'reference' => '4c3334f17729666b924a99d26c76fed0708a7585',
     'name' => 'jodit/jodit-joomla',
   ),
   'versions' => 
@@ -40,12 +40,12 @@
     ),
     'jodit/application' => 
     array (
-      'pretty_version' => '3.0.30',
-      'version' => '3.0.30.0',
+      'pretty_version' => '3.0.32',
+      'version' => '3.0.32.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'e04994e985bd060b1c835e9dab62f2182da78937',
+      'reference' => 'da9e8cc975567a7c44bd92ff3a7d566aae7d5213',
     ),
     'jodit/jodit-joomla' => 
     array (
@@ -54,7 +54,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => 'c5f812cab3182487a8f8d92fe019d188daeca92b',
+      'reference' => '4c3334f17729666b924a99d26c76fed0708a7585',
     ),
     'league/color-extractor' => 
     array (

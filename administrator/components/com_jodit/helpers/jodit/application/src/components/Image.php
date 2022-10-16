@@ -34,13 +34,13 @@ class Image {
 	];
 
 	/**
-	 * @param $color
-	 * @param $percent
-	 * @return mixed
+	 * @param int[] $color
+	 * @param float $percent
+	 * @return int[]
 	 */
 	public static function luminate($color, $percent) {
 		foreach ($color as &$value) {
-			$value = min(max(0, self::luminateValue($value, $percent)), 255);
+			$value = (int)min(max(0, self::luminateValue($value, $percent)), 255);
 		}
 
 		return $color;
@@ -92,7 +92,7 @@ class Image {
 			$g = '0' . $g;
 		}
 
-		$b = dechex($b);
+		$b = dechex((int)$b);
 		if (strlen($b) < 2) {
 			$b = '0' . $b;
 		}

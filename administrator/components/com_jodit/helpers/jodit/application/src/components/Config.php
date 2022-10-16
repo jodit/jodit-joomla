@@ -35,6 +35,9 @@ $defaultConfig = include __DIR__ . '/../configs/defaultConfig.php';
  * @property string $datetimeFormat
  * @property string $baseurl
  * @property number $defaultPermission
+ * @property number $safeThumbsCountInOneTime
+ * @property string[] $imageExtensions
+ * @property string[] $extensions
  * @package jodit
  */
 class Config {

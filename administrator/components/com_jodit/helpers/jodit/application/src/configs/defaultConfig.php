@@ -19,6 +19,7 @@ return [
 	'memoryLimit' => '256M',
 	'timeoutLimit' => 60,
 	'allowCrossOrigin' => false,
+	'safeThumbsCountInOneTime' => 10,
 
 	'sourceClassName' => 'Jodit\sources\FileSystem',
 
@@ -75,8 +76,9 @@ return [
 		'mkv',
 		'mp4',
 		'wmv',
+		'webp'
 	],
-	'imageExtensions' => ['jpg', 'png', 'gif', 'jpeg', 'bmp', 'svg', 'ico'],
+	'imageExtensions' => ['jpg', 'png', 'gif', 'jpeg', 'bmp', 'svg', 'ico', 'webp'],
 	'maxImageWidth' => 1900,
 	'maxImageHeight' => 1900,
 ];

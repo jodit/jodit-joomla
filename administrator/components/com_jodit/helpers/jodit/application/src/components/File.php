@@ -52,22 +52,29 @@ class File extends IFile {
 	 * @param Config $source
 	 * @return bool
 	 */
-	public function isGoodFile($source) {
-		$info = pathinfo($this->path);
+	public function isGoodFile($source): bool {
+		$ext = $this->getExtension();
 
-		if (
-			!isset($info['extension']) or
-			!in_array(strtolower($info['extension']), $source->extensions)
-		) {
+		if (!$ext or !in_array($ext, $source->extensions)) {
 			return false;
 		}
 
-		if (
-			in_array(
-				strtolower($info['extension']),
-				$source->imageExtensions
-			) and !$this->isImage()
-		) {
+		return true;
+	}
+
+	/**
+	 * File is safe
+	 * @param $source
+	 * @return bool
+	 */
+	public function isSafeFile($source): bool {
+		$ext = $this->getExtension();
+
+		if (!$this->isGoodFile($source)) {
+			return false;
+		}
+
+		if (in_array($ext, $source->imageExtensions) && !$this->isImage()) {
 			return false;
 		}
 
@@ -123,7 +130,7 @@ class File extends IFile {
 	/**
 	 * @return string
 	 */
-	public function getName() {
+	public function getName(): string {
 		$parts = explode(Consts::DS, $this->getPath());
 		return array_pop($parts) ?: '';
 	}
@@ -135,7 +142,7 @@ class File extends IFile {
 	 */
 	public function getExtension() {
 		$parts = explode('.', $this->getName());
-		return array_pop($parts) ?: '';
+		return mb_strtolower(array_pop($parts) ?: '');
 	}
 
 	/**
@@ -165,10 +172,10 @@ class File extends IFile {
 
 	/**
 	 * @param Config $source
-	 * @return string|string[]
+	 * @return string
 	 * @throws Exception
 	 */
-	public function getPathByRoot($source) {
+	public function getPathByRoot($source): string {
 		$path = preg_replace('#[\\\\/]#', '/', $this->getPath());
 		$root = preg_replace('#[\\\\/]#', '/', $source->getPath());
 
@@ -179,9 +186,16 @@ class File extends IFile {
 	 * Check by mimetype what file is image
 	 * @return bool
 	 */
-	public function isImage() {
+
+	private $__isFile = null;
+	public function isImage(): bool {
+		if (is_bool($this->__isFile)) {
+			return $this->__isFile;
+		}
+
 		try {
 			if ($this->isSVGImage()) {
+				$this->__isFile = true;
 				return true;
 			}
 
@@ -203,23 +217,26 @@ class File extends IFile {
 				}
 			}
 
-			return in_array(exif_imagetype($this->getPath()), [
+			$this->__isFile = in_array(exif_imagetype($this->getPath()), [
 				IMAGETYPE_GIF,
 				IMAGETYPE_JPEG,
 				IMAGETYPE_PNG,
 				IMAGETYPE_BMP,
+				IMAGETYPE_WEBP,
 			]);
 		} catch (Exception $e) {
-			return false;
+			$this->__isFile = false;
 		}
+
+		return $this->__isFile;
 	}
 
 	/**
 	 * Check file is SVG image
 	 * @return bool
 	 */
-	public function isSVGImage() {
-		return strtolower($this->getExtension()) === 'svg';
+	public function isSVGImage(): bool {
+		return $this->getExtension() === 'svg';
 	}
 
 	/**

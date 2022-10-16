@@ -28,9 +28,10 @@ abstract class ISource extends Config {
 
 	/**
 	 * @param IFile $file
+	 * @param int $countThumbs
 	 * @return mixed
 	 */
-	abstract public function makeThumb(IFile $file);
+	abstract public function makeThumb(IFile $file, int &$countThumbs);
 
 	/**
 	 * @param string $file

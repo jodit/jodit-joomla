@@ -64,7 +64,7 @@ trait File {
 		$file = $source->makeFile($source->getRoot() . $filename);
 
 		try {
-			if (!$file->isGoodFile($source)) {
+			if (!$file->isSafeFile($source)) {
 				throw new Exception('Bad file', Consts::ERROR_CODE_FORBIDDEN);
 			}
 

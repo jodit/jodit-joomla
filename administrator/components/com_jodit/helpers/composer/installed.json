@@ -203,17 +203,17 @@
         },
         {
             "name": "jodit/application",
-            "version": "3.0.30",
-            "version_normalized": "3.0.30.0",
+            "version": "3.0.32",
+            "version_normalized": "3.0.32.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/xdan/jodit-connector-application.git",
-                "reference": "e04994e985bd060b1c835e9dab62f2182da78937"
+                "reference": "da9e8cc975567a7c44bd92ff3a7d566aae7d5213"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/xdan/jodit-connector-application/zipball/e04994e985bd060b1c835e9dab62f2182da78937",
-                "reference": "e04994e985bd060b1c835e9dab62f2182da78937",
+                "url": "https://api.github.com/repos/xdan/jodit-connector-application/zipball/da9e8cc975567a7c44bd92ff3a7d566aae7d5213",
+                "reference": "da9e8cc975567a7c44bd92ff3a7d566aae7d5213",
                 "shasum": ""
             },
             "require": {
@@ -224,7 +224,7 @@
                 "ext-gd": "*",
                 "ext-json": "*",
                 "ext-mbstring": "*",
-                "php": ">=7.0"
+                "php": ">=7.1"
             },
             "require-dev": {
                 "codeception/codeception": "^4.1",
@@ -233,7 +233,7 @@
                 "codeception/module-rest": "^1.2",
                 "vimeo/psalm": "^4.4"
             },
-            "time": "2022-09-10T14:13:33+00:00",
+            "time": "2022-09-16T21:09:10+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -256,7 +256,7 @@
             "description": "Jodit FileBrowser and Uploader connector",
             "support": {
                 "issues": "https://github.com/xdan/jodit-connector-application/issues",
-                "source": "https://github.com/xdan/jodit-connector-application/tree/3.0.30"
+                "source": "https://github.com/xdan/jodit-connector-application/tree/3.0.32"
             },
             "install-path": "../jodit/application"
         },

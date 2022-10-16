@@ -42,9 +42,10 @@ class FileSystem extends ISource {
 
 	/**
 	 * @param IFile $file
+	 * @param int $countThumbs
 	 * @return mixed
 	 */
-	public function makeThumb(IFile $file) {
+	public function makeThumb(IFile $file, int &$countThumbs = 0) {
 		$path = $file->getFolder();
 
 		if (!is_dir($path . $this->thumbFolderName)) {
@@ -72,6 +73,8 @@ class FileSystem extends ISource {
 			if ($file->isSVGImage()) {
 				return $file;
 			}
+
+			$countThumbs++;
 
 			if ($file->isImage()) {
 				try {
@@ -132,12 +135,12 @@ class FileSystem extends ISource {
 
 		$config = $this;
 
-		$offset = (int)Jodit::$app->request->getField('mods/offset', 0);
+		$offset = (int) Jodit::$app->request->getField('mods/offset', 0);
 		if (!is_numeric($offset)) {
 			throw new Exception('Offset is not numeric');
 		}
 
-		$limit = (int)Jodit::$app->request->getField(
+		$limit = (int) Jodit::$app->request->getField(
 			'mods/limit',
 			$this->countInChunk
 		);
@@ -162,7 +165,9 @@ class FileSystem extends ISource {
 
 		$this->sortByMode($files, $sortBy);
 
+		$countThumbs = 0;
 		foreach (array_slice($files, $offset, $limit) as $index => $file) {
+			$isImage = in_array($file->getExtension(), $this->imageExtensions);
 			/**
 			 * @var IFile $file
 			 */
@@ -170,13 +175,16 @@ class FileSystem extends ISource {
 				$item = [
 					'file' => $file->getPathByRoot($this),
 					'name' => $file->getName(),
-					'type' => $file->isImage() ? 'image' : 'file',
+					'type' => $isImage ? 'image' : 'file',
 				];
 
-				if ($config->createThumb || !$file->isImage()) {
-					$item['thumb'] = $this->makeThumb($file)->getPathByRoot(
-						$this
-					);
+				if ($countThumbs <= $config->safeThumbsCountInOneTime) {
+					if ($config->createThumb || !$file->isImage()) {
+						$item['thumb'] = $this->makeThumb(
+							$file,
+							$countThumbs
+						)->getPathByRoot($this);
+					}
 				}
 
 				$item['changed'] = date(
@@ -185,7 +193,7 @@ class FileSystem extends ISource {
 				);
 
 				$item['size'] = Helper::humanFileSize($file->getSize());
-				$item['isImage'] = $file->isImage();
+				$item['isImage'] = $isImage;
 
 				$sourceData->files[] = $item;
 			} else {
@@ -550,7 +558,7 @@ class FileSystem extends ISource {
 		if (file_exists($root . $path) && is_file($root . $path)) {
 			$file = $this->makeFile($root . $path);
 
-			if ($file->isGoodFile($this)) {
+			if ($file->isSafeFile($this)) {
 				return [
 					'path' => str_replace(
 						$root,

@@ -361,7 +361,7 @@ abstract class BaseApplication {
 						throw $e;
 					}
 
-					if (!$file->isGoodFile($source)) {
+					if (!$file->isSafeFile($source)) {
 						$file->remove();
 						throw new Exception(
 							'File type is not in white list',

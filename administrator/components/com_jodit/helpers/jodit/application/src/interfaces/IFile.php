@@ -12,7 +12,8 @@ abstract class IFile {
 	 * @param $source
 	 * @return bool
 	 */
-	abstract public function isGoodFile($source);
+	abstract public function isGoodFile($source): bool;
+	abstract public function isSafeFile($source): bool;
 
 	/**
 	 * @return bool
@@ -35,7 +36,7 @@ abstract class IFile {
 	/**
 	 * @return string
 	 */
-	abstract public function getName();
+	abstract public function getName(): string;
 
 	/**
 	 * @return string
@@ -53,7 +54,7 @@ abstract class IFile {
 	abstract public function getSize();
 
 	/**
-	 * @return string
+	 * @return false|int
 	 */
 	abstract public function getTime();
 
